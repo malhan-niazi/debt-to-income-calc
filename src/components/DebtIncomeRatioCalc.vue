@@ -16,14 +16,27 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter amount"
+                      v-model="expense.monthlyMortgagePayment"
+                      v-bind:class="{ 'is-invalid': invalidMonthlyMortgagePayment }"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="expenseInfoChecked" />
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="expenseInfoChecked"
+                      v-model="expense.checked"
+                      @change="resetExpense()"
+                    />
                     <label
                       class="form-check-label"
                       for="gridCheck"
@@ -38,7 +51,14 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter amount"
+                      v-model="expense.monthlyPayment"
+                      v-bind:class="{ 'is-invalid': invalidMonthlyPayment }"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
@@ -49,7 +69,14 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter amount"
+                      v-model="expense.annualPropertyTax"
+                      v-bind:class="{ 'is-invalid': invalidAnnualPropertyTax }"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
@@ -60,7 +87,14 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter amount"
+                      v-model="expense.annualPropertyInsurance"
+                      v-bind:class="{ 'is-invalid': invalidAnnualPropertyInsurance }"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
@@ -71,7 +105,14 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter amount"
+                      v-model="expense.annualHoaFees"
+                      v-bind:class="{ 'is-invalid': invalidAnnualHoaFees }"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
@@ -87,14 +128,25 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter amount"
+                      v-model="income.grossIncome"
+                    />
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="incomeInfoChecked" />
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="incomeInfoChecked"
+                      v-model="income.checked"
+                      @change="resetIncome()"
+                    />
                     <label
                       class="form-check-label"
                       for="gridCheck"
@@ -104,34 +156,49 @@
               </div>
               <div class="row">
                 <div class="form-group col">
-                  <label for="text">Gross Monthly Income</label>
+                  <label for="text">Annual Salary</label>
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter amount"
+                      v-model="income.annualSalary"
+                    />
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col">
-                  <label for="text">Gross Monthly Income</label>
+                  <label for="text">Spouce or Partners Annual Salary</label>
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter amount"
+                      v-model="income.spouceAnnualSalary"
+                    />
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col">
-                  <label for="text">Gross Monthly Income</label>
+                  <label for="text">Other Annual Income</label>
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
                     </div>
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="enter amount"
+                      v-model="income.otherIncome"
+                    />
                   </div>
                 </div>
               </div>
@@ -154,7 +221,7 @@
                   <div class="form-group">
                     <label for="text">Debt to Income Ratio</label>
                     <div class="input-group">
-                      <span class="form-control">{{ total }}</span>
+                      <span class="form-control">{{ ratio }}</span>
                       <div class="input-group-append">
                         <span class="input-group-text">%</span>
                       </div>
@@ -175,6 +242,54 @@ export default {
   name: "DebtIncomeRatioCalc",
   props: {
     msg: String
+  },
+  data() {
+    return {
+      expense: {
+        monthlyMortgagePayment: 0,
+        monthlyPayment: 0,
+        annualPropertyTax: 0,
+        annualPropertyInsurance: 0,
+        annualHoaFees: 0,
+        checked: true
+      },
+      income: {
+        grossIncome: 0,
+        annualSalary: 0,
+        spouceAnnualSalary: 0,
+        otherIncome: 0,
+        checked: true
+      },
+      ratio: 0
+    };
+  },
+  computed: {
+    invalidMonthlyMortgagePayment() {
+      return this.isInvalid(this.expense.monthlyMortgagePayment);
+    },
+    invalidMonthlyPayment() {
+      return this.isInvalid(this.expense.monthlyPayment);
+    },
+    invalidAnnualPropertyTax() {
+      return this.isInvalid(this.expense.annualPropertyTax);
+    },
+    invalidAnnualPropertyInsurance() {
+      return this.isInvalid(this.expense.annualPropertyInsurance);
+    },
+    invalidAnnualHoaFees() {
+      return this.isInvalid(this.expense.annualHoaFees);
+    }
+  },
+  methods: {
+    isInvalid(n) {
+      return this.isEmpty(n) || !this.isNumeric(n);
+    },
+    isEmpty(n) {
+      return n === "";
+    },
+    isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    }
   }
 };
 </script>
