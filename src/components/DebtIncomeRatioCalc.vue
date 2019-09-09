@@ -22,6 +22,7 @@
                       placeholder="enter amount"
                       v-model="expense.monthlyMortgagePayment"
                       v-bind:class="{ 'is-invalid': invalidMonthlyMortgagePayment }"
+                      :disabled="expense.checked"
                     />
                     <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
@@ -57,6 +58,7 @@
                       placeholder="enter amount"
                       v-model="expense.monthlyPayment"
                       v-bind:class="{ 'is-invalid': invalidMonthlyPayment }"
+                      :disabled="!expense.checked"
                     />
                     <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
@@ -75,6 +77,7 @@
                       placeholder="enter amount"
                       v-model="expense.annualPropertyTax"
                       v-bind:class="{ 'is-invalid': invalidAnnualPropertyTax }"
+                      :disabled="!expense.checked"
                     />
                     <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
@@ -93,6 +96,7 @@
                       placeholder="enter amount"
                       v-model="expense.annualPropertyInsurance"
                       v-bind:class="{ 'is-invalid': invalidAnnualPropertyInsurance }"
+                      :disabled="!expense.checked"
                     />
                     <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
@@ -111,6 +115,7 @@
                       placeholder="enter amount"
                       v-model="expense.annualHoaFees"
                       v-bind:class="{ 'is-invalid': invalidAnnualHoaFees }"
+                      :disabled="!expense.checked"
                     />
                     <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
@@ -133,7 +138,10 @@
                       class="form-control"
                       placeholder="enter amount"
                       v-model="income.grossIncome"
+                      v-bind:class="{ 'is-invalid': invalidGrossIncome }"
+                      :disabled="income.checked"
                     />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
@@ -166,7 +174,10 @@
                       class="form-control"
                       placeholder="enter amount"
                       v-model="income.annualSalary"
+                      v-bind:class="{ 'is-invalid': invalidAnnualSalary }"
+                      :disabled="!income.checked"
                     />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
@@ -182,7 +193,10 @@
                       class="form-control"
                       placeholder="enter amount"
                       v-model="income.spouceAnnualSalary"
+                      v-bind:class="{ 'is-invalid': invalidSpouceAnnualSalary }"
+                      :disabled="!income.checked"
                     />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
@@ -198,7 +212,10 @@
                       class="form-control"
                       placeholder="enter amount"
                       v-model="income.otherIncome"
+                      v-bind:class="{ 'is-invalid': invalidOtherIncome }"
+                      :disabled="!income.checked"
                     />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
@@ -251,14 +268,14 @@ export default {
         annualPropertyTax: 0,
         annualPropertyInsurance: 0,
         annualHoaFees: 0,
-        checked: true
+        checked: false
       },
       income: {
         grossIncome: 0,
         annualSalary: 0,
         spouceAnnualSalary: 0,
         otherIncome: 0,
-        checked: true
+        checked: false
       },
       ratio: 0
     };
@@ -278,6 +295,18 @@ export default {
     },
     invalidAnnualHoaFees() {
       return this.isInvalid(this.expense.annualHoaFees);
+    },
+    invalidGrossIncome() {
+      return this.isInvalid(this.income.grossIncome);
+    },
+    invalidAnnualSalary() {
+      return this.isInvalid(this.income.annualSalary);
+    },
+    invalidSpouceAnnualSalary() {
+      return this.isInvalid(this.income.spouceAnnualSalary);
+    },
+    invalidOtherIncome() {
+      return this.isInvalid(this.income.otherIncome);
     }
   },
   methods: {
@@ -289,7 +318,9 @@ export default {
     },
     isNumeric(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
-    }
+    },
+    resetIncome() {},
+    resetExpense() {}
   }
 };
 </script>
