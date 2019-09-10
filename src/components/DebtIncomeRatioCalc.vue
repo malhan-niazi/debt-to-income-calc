@@ -1,14 +1,24 @@
 <template>
   <div>
-    <h1>{{ msg }}</h1>
     <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <h5>
+            <h1>{{ msg }}</h1>
+          </h5>
+        </div>
+      </div>
       <div class="row">
         <div class="col-8 border">
           <div class="row">
             <div class="col">
-              <h5>
-                <span class="badge badge-secondary">Expense</span>
-              </h5>
+              <div class="row">
+                <div class="col text-center">
+                  <h5>
+                    <span class="badge badge-secondary">Expense</span>
+                  </h5>
+                </div>
+              </div>
               <div class="row">
                 <div class="form-group col">
                   <label for="text">Total First Mortgage Monthly Payment(s)</label>
@@ -124,11 +134,14 @@
                 </div>
               </div>
             </div>
-
             <div class="col">
-              <h5>
-                <span class="badge badge-secondary">Income</span>
-              </h5>
+              <div class="row">
+                <div class="col text-center">
+                  <h5>
+                    <span class="badge badge-secondary">Income</span>
+                  </h5>
+                </div>
+              </div>
               <div class="row">
                 <div class="form-group col">
                   <label for="text">Gross Monthly Income</label>
@@ -165,60 +178,62 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="text">Annual Salary</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">$</span>
+              <div v-if="income.checked">
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="text">Annual Salary</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="enter amount"
+                        v-model="income.annualSalary"
+                        v-bind:class="{ 'is-invalid': invalidAnnualSalary }"
+                        :disabled="!income.checked"
+                      />
+                      <div class="invalid-feedback">This field is required and must be numeric.</div>
                     </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="enter amount"
-                      v-model="income.annualSalary"
-                      v-bind:class="{ 'is-invalid': invalidAnnualSalary }"
-                      :disabled="!income.checked"
-                    />
-                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="text">Spouce or Partners Annual Salary</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">$</span>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="text">Spouce or Partners Annual Salary</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="enter amount"
+                        v-model="income.spouceAnnualSalary"
+                        v-bind:class="{ 'is-invalid': invalidSpouceAnnualSalary }"
+                        :disabled="!income.checked"
+                      />
+                      <div class="invalid-feedback">This field is required and must be numeric.</div>
                     </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="enter amount"
-                      v-model="income.spouceAnnualSalary"
-                      v-bind:class="{ 'is-invalid': invalidSpouceAnnualSalary }"
-                      :disabled="!income.checked"
-                    />
-                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="text">Other Annual Income</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">$</span>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="text">Other Annual Income</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="enter amount"
+                        v-model="income.otherIncome"
+                        v-bind:class="{ 'is-invalid': invalidOtherIncome }"
+                        :disabled="!income.checked"
+                      />
+                      <div class="invalid-feedback">This field is required and must be numeric.</div>
                     </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="enter amount"
-                      v-model="income.otherIncome"
-                      v-bind:class="{ 'is-invalid': invalidOtherIncome }"
-                      :disabled="!income.checked"
-                    />
-                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
@@ -230,14 +245,14 @@
           <div class="row border border-left-0">
             <div class="col">
               <div class="row">
-                <div class="col">
+                <div class="col text-center">
                   <h5>
                     <span class="badge badge-secondary">Result</span>
                   </h5>
                 </div>
               </div>
               <div class="row">
-                <div class="col text-center">
+                <div class="col">
                   <div class="form-group">
                     <label for="text">Debt to Income Ratio</label>
                     <div class="input-group">
