@@ -45,83 +45,86 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="text">Monthly Payment</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">$</span>
+              <div v-if="expense.checked">
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="text">Monthly Payment</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="enter amount"
+                        v-model="expense.monthlyPayment"
+                        v-bind:class="{ 'is-invalid': invalidMonthlyPayment }"
+                        :disabled="!expense.checked"
+                      />
+                      <div class="invalid-feedback">This field is required and must be numeric.</div>
                     </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="enter amount"
-                      v-model="expense.monthlyPayment"
-                      v-bind:class="{ 'is-invalid': invalidMonthlyPayment }"
-                      :disabled="!expense.checked"
-                    />
-                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="text">Annual Property Taxes</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">$</span>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="text">Annual Property Taxes</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="enter amount"
+                        v-model="expense.annualPropertyTax"
+                        v-bind:class="{ 'is-invalid': invalidAnnualPropertyTax }"
+                        :disabled="!expense.checked"
+                      />
+                      <div class="invalid-feedback">This field is required and must be numeric.</div>
                     </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="enter amount"
-                      v-model="expense.annualPropertyTax"
-                      v-bind:class="{ 'is-invalid': invalidAnnualPropertyTax }"
-                      :disabled="!expense.checked"
-                    />
-                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="text">Annual Property Insurance</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">$</span>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="text">Annual Property Insurance</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="enter amount"
+                        v-model="expense.annualPropertyInsurance"
+                        v-bind:class="{ 'is-invalid': invalidAnnualPropertyInsurance }"
+                        :disabled="!expense.checked"
+                      />
+                      <div class="invalid-feedback">This field is required and must be numeric.</div>
                     </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="enter amount"
-                      v-model="expense.annualPropertyInsurance"
-                      v-bind:class="{ 'is-invalid': invalidAnnualPropertyInsurance }"
-                      :disabled="!expense.checked"
-                    />
-                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="text">Annual HOA Fees</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">$</span>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="text">Annual HOA Fees</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="enter amount"
+                        v-model="expense.annualHoaFees"
+                        v-bind:class="{ 'is-invalid': invalidAnnualHoaFees }"
+                        :disabled="!expense.checked"
+                      />
+                      <div class="invalid-feedback">This field is required and must be numeric.</div>
                     </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="enter amount"
-                      v-model="expense.annualHoaFees"
-                      v-bind:class="{ 'is-invalid': invalidAnnualHoaFees }"
-                      :disabled="!expense.checked"
-                    />
-                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
               </div>
             </div>
+
             <div class="col">
               <h5>
                 <span class="badge badge-secondary">Income</span>
