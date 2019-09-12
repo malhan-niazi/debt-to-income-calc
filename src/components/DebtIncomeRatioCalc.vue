@@ -10,7 +10,7 @@
       </div>
       <div class="row">
         <div class="col-8 border">
-          <form id="form" v-on:submit="validate">
+          <form id="form" v-on:submit="calculate">
             <div class="row">
               <div class="col">
                 <div class="row">
@@ -31,7 +31,7 @@
                         type="text"
                         class="form-control"
                         placeholder="enter amount"
-                        v-model="expense.monthlyMortgagePayment"
+                        v-model.number="expense.monthlyMortgagePayment"
                         v-bind:class="{ 'is-invalid': invalidMonthlyMortgagePayment }"
                         :disabled="expense.checked"
                       />
@@ -47,7 +47,6 @@
                         type="checkbox"
                         id="expenseInfoChecked"
                         v-model="expense.checked"
-                        @change="resetExpense()"
                       />
                       <label
                         class="form-check-label"
@@ -68,7 +67,7 @@
                           type="text"
                           class="form-control"
                           placeholder="enter amount"
-                          v-model="expense.monthlyPayment"
+                          v-model.number="expense.monthlyPayment"
                           v-bind:class="{ 'is-invalid': invalidMonthlyPayment }"
                           :disabled="!expense.checked"
                         />
@@ -87,7 +86,7 @@
                           type="text"
                           class="form-control"
                           placeholder="enter amount"
-                          v-model="expense.annualPropertyTax"
+                          v-model.number="expense.annualPropertyTax"
                           v-bind:class="{ 'is-invalid': invalidAnnualPropertyTax }"
                           :disabled="!expense.checked"
                         />
@@ -106,7 +105,7 @@
                           type="text"
                           class="form-control"
                           placeholder="enter amount"
-                          v-model="expense.annualPropertyInsurance"
+                          v-model.number="expense.annualPropertyInsurance"
                           v-bind:class="{ 'is-invalid': invalidAnnualPropertyInsurance }"
                           :disabled="!expense.checked"
                         />
@@ -125,7 +124,7 @@
                           type="text"
                           class="form-control"
                           placeholder="enter amount"
-                          v-model="expense.annualHoaFees"
+                          v-model.number="expense.annualHoaFees"
                           v-bind:class="{ 'is-invalid': invalidAnnualHoaFees }"
                           :disabled="!expense.checked"
                         />
@@ -154,7 +153,7 @@
                         type="text"
                         class="form-control"
                         placeholder="enter amount"
-                        v-model="income.grossIncome"
+                        v-model.number="income.grossIncome"
                         v-bind:class="{ 'is-invalid': invalidGrossIncome }"
                         :disabled="income.checked"
                       />
@@ -170,7 +169,6 @@
                         type="checkbox"
                         id="incomeInfoChecked"
                         v-model="income.checked"
-                        @change="resetIncome()"
                       />
                       <label
                         class="form-check-label"
@@ -191,7 +189,7 @@
                           type="text"
                           class="form-control"
                           placeholder="enter amount"
-                          v-model="income.annualSalary"
+                          v-model.number="income.annualSalary"
                           v-bind:class="{ 'is-invalid': invalidAnnualSalary }"
                           :disabled="!income.checked"
                         />
@@ -210,7 +208,7 @@
                           type="text"
                           class="form-control"
                           placeholder="enter amount"
-                          v-model="income.spouceAnnualSalary"
+                          v-model.number="income.spouceAnnualSalary"
                           v-bind:class="{ 'is-invalid': invalidSpouceAnnualSalary }"
                           :disabled="!income.checked"
                         />
@@ -229,7 +227,7 @@
                           type="text"
                           class="form-control"
                           placeholder="enter amount"
-                          v-model="income.otherIncome"
+                          v-model.number="income.otherIncome"
                           v-bind:class="{ 'is-invalid': invalidOtherIncome }"
                           :disabled="!income.checked"
                         />
@@ -240,12 +238,12 @@
                 </div>
               </div>
             </div>
-          </form>
-          <div class="row">
-            <div class="col">
-              <button class="btn btn-primary">Calculate</button>
+            <div class="row">
+              <div class="col">
+                <button class="btn btn-primary">Calculate</button>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
         <div class="col-4">
           <div class="row border border-left-0">
@@ -262,10 +260,14 @@
                   <div class="form-group">
                     <label for="text">Debt to Income Ratio</label>
                     <div class="input-group">
-                      <span class="form-control">{{ ratio }}</span>
+                      <span
+                        class="form-control"
+                        v-bind:class="{ 'is-invalid': !validForm }"
+                      >{{ ratio }}</span>
                       <div class="input-group-append">
                         <span class="input-group-text">%</span>
                       </div>
+                      <div class="invalid-feedback">Missing fields</div>
                     </div>
                   </div>
                 </div>
@@ -287,21 +289,22 @@ export default {
   data() {
     return {
       expense: {
-        monthlyMortgagePayment: 0,
-        monthlyPayment: 0,
-        annualPropertyTax: 0,
-        annualPropertyInsurance: 0,
-        annualHoaFees: 0,
+        monthlyMortgagePayment: null,
+        monthlyPayment: null,
+        annualPropertyTax: null,
+        annualPropertyInsurance: null,
+        annualHoaFees: null,
         checked: false
       },
       income: {
-        grossIncome: 0,
-        annualSalary: 0,
-        spouceAnnualSalary: 0,
-        otherIncome: 0,
+        grossIncome: null,
+        annualSalary: null,
+        spouceAnnualSalary: null,
+        otherIncome: null,
         checked: false
       },
-      ratio: 0
+      ratio: null,
+      validForm: null
     };
   },
   computed: {
@@ -343,8 +346,69 @@ export default {
     isNumeric(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
     },
-    resetIncome() {},
-    resetExpense() {}
+    calculate(event) {
+      this.validForm = this.isValidForm();
+      if (this.validForm) {
+        if (this.expense.checked) {
+          this.computeMonthlyMortgagePayement();
+        }
+        if (this.income.checked) {
+          this.computeGrossIncome();
+        }
+        this.ratio = (
+          100 *
+          (this.expense.monthlyMortgagePayment / this.income.grossIncome)
+        ).toFixed(2);
+        event.preventDefault();
+        console.log("validForm");
+      } else {
+        event.preventDefault();
+        this.ratio = null;
+      }
+    },
+    computeMonthlyMortgagePayement() {
+      this.expense.monthlyMortgagePayment = (
+        this.expense.monthlyPayment +
+        (this.expense.annualPropertyTax +
+          this.expense.annualPropertyInsurance +
+          this.expense.annualHoaFees) /
+          12
+      ).toFixed(2);
+    },
+    computeGrossIncome() {
+      this.income.grossIncome = (
+        (this.income.annualSalary +
+          this.income.spouceAnnualSalary +
+          this.income.otherIncome) /
+        12
+      ).toFixed(2);
+    },
+    isValidForm() {
+      if (!this.expense.checked) {
+        if (this.invalidMonthlyMortgagePayment) {
+          return false;
+        }
+      } else if (
+        this.invalidMonthlyPayment ||
+        this.invalidAnnualPropertyTax ||
+        this.invalidAnnualPropertyInsurance ||
+        this.invalidAnnualHoaFees
+      ) {
+        return false;
+      }
+      if (!this.income.checked) {
+        if (this.invalidGrossIncome) {
+          return false;
+        }
+      } else if (
+        this.invalidAnnualSalary ||
+        this.invalidSpouceAnnualSalary ||
+        this.invalidOtherIncome
+      ) {
+        return false;
+      }
+      return true;
+    }
   }
 };
 </script>
