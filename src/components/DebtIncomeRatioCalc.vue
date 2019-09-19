@@ -10,12 +10,25 @@
       </div>
       <div class="row">
         <div class="col">
+          <div class="row">
+            <div class="col">
+              <div class="row padding-label">
+                <h5>
+                  <span class>How to Use</span>
+                </h5>
+              </div>
+              <div class="row padding-p background--gray">
+                <p>This Debt-to-Income Ratio calculator is provided to help you determine the percentage of how much you pay each month for your mortgage(s) compared to your total monthly gross income.</p>
+                <p>This calculator returns information based on your inputs regarding your existing mortgage information. It is important that you provide accurate information in order to receive more realistic results.</p>
+              </div>
+            </div>
+          </div>
           <form action>
             <div class="row">
               <div class="col">
-                <div class="row padding-label">
+                <div class="row padding-label color-blue font-weight-bold">
                   <h5>
-                    <span class>EXPENSE</span>
+                    <span class>Your Existing Mortgage Information</span>
                   </h5>
                 </div>
               </div>
@@ -23,7 +36,7 @@
             <div class="form-group row background--gray padding margin-bottom">
               <label
                 for="expense1"
-                class="col-sm-6 padding-right-none col-form-label"
+                class="col-sm-6 padding-right-none col-form-label font-weight-bold"
               >Total First Mortgage Monthly Payment(s)</label>
               <div class="col-sm-6 padding-right-none">
                 <div class="input-group">
@@ -44,6 +57,9 @@
                 </div>
               </div>
             </div>
+            <div class="row padding-p background--gray margin-bottom">
+              <p>This should include your first monthly mortgage payment, as well as any additional mortgage payments you may have. It should also include principal, interest, taxes, insurance and homeowner's association fees. If you have an escrow account set up on your first mortgage, these costs will be included in your monthly payment.</p>
+            </div>
             <div class="form-group row background--gray padding margin-bottom">
               <div class="col-sm-10">
                 <div class="form-check">
@@ -55,7 +71,10 @@
                     v-bind:value="false"
                     checked
                   />
-                  <label class="form-check-label" for="expenseRadio1">Fill out full amount</label>
+                  <label
+                    class="form-check-label"
+                    for="expenseRadio1"
+                  >Fill out consolidated Mortgage Monthly Payment(s) above.</label>
                 </div>
                 <div class="form-check">
                   <input
@@ -65,7 +84,10 @@
                     v-model="expense.checked"
                     v-bind:value="true"
                   />
-                  <label class="form-check-label" for="expenseRadio1">Fill out individual items</label>
+                  <label
+                    class="form-check-label"
+                    for="expenseRadio1"
+                  >If not, click here and fill in the information below.</label>
                 </div>
               </div>
             </div>
@@ -73,7 +95,7 @@
               <div class="form-group row background--gray padding margin-bottom">
                 <label
                   for="expense2"
-                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                  class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
                 >Monthly Payment</label>
                 <div class="col-sm-6 padding-right-none">
                   <div class="input-group">
@@ -96,7 +118,7 @@
               <div class="form-group row background--gray padding margin-bottom">
                 <label
                   for="expense3"
-                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                  class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
                 >Annual Property Taxes</label>
                 <div class="col-sm-6 padding-right-none">
                   <div class="input-group">
@@ -119,7 +141,7 @@
               <div class="form-group row background--gray padding margin-bottom">
                 <label
                   for="expense4"
-                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                  class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
                 >Annual Property Insurance</label>
                 <div class="col-sm-6 padding-right-none">
                   <div class="input-group">
@@ -142,7 +164,7 @@
               <div class="form-group row background--gray padding margin-bottom">
                 <label
                   for="expense5"
-                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                  class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
                 >Annual Home Owner's Association Fees</label>
                 <div class="col-sm-6 padding-right-none">
                   <div class="input-group">
@@ -165,9 +187,9 @@
             </div>
             <div class="row">
               <div class="col">
-                <div class="row padding-label">
+                <div class="row padding-label color-blue font-weight-bold">
                   <h5>
-                    <span class>INCOME</span>
+                    <span class>Your Income Information</span>
                   </h5>
                 </div>
               </div>
@@ -175,7 +197,7 @@
             <div class="form-group row background--gray padding margin-bottom">
               <label
                 for="income1"
-                class="col-sm-6 padding-right-none col-form-label"
+                class="col-sm-6 padding-right-none col-form-label font-weight-bold"
               >Gross Monthly Income</label>
               <div class="col-sm-6 padding-right-none">
                 <div class="input-group">
@@ -207,7 +229,10 @@
                     v-bind:value="false"
                     checked
                   />
-                  <label class="form-check-label" for="incomeRadio1">Fill out full amount</label>
+                  <label
+                    class="form-check-label"
+                    for="incomeRadio1"
+                  >Fill out consolidated Gross Monthly Income above.</label>
                 </div>
                 <div class="form-check">
                   <input
@@ -217,7 +242,10 @@
                     v-model="income.checked"
                     v-bind:value="true"
                   />
-                  <label class="form-check-label" for="incomeRadio2">Fill out individual items</label>
+                  <label
+                    class="form-check-label"
+                    for="incomeRadio2"
+                  >If you are unsure of this amount, click here and fill in the information below.</label>
                 </div>
               </div>
             </div>
@@ -225,7 +253,7 @@
               <div class="form-group row background--gray padding margin-bottom">
                 <label
                   for="income2"
-                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                  class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
                 >Annual Salary</label>
                 <div class="col-sm-6 padding-right-none">
                   <div class="input-group">
@@ -248,7 +276,7 @@
               <div class="form-group row background--gray padding margin-bottom">
                 <label
                   for="income3"
-                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                  class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
                 >Spouse or Partner's Annual Salary</label>
                 <div class="col-sm-6 padding-right-none">
                   <div class="input-group">
@@ -271,7 +299,7 @@
               <div class="form-group row background--gray padding margin-bottom">
                 <label
                   for="income4"
-                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                  class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
                 >Other Annual Income</label>
                 <div class="col-sm-6 padding-right-none">
                   <div class="input-group">
@@ -302,9 +330,9 @@
           </form>
           <div class="row">
             <div class="col">
-              <div class="row padding-label">
+              <div class="row padding-label color-blue">
                 <h5>
-                  <span class>RESULT</span>
+                  <span class>Result</span>
                 </h5>
               </div>
             </div>
@@ -312,7 +340,7 @@
           <div class="form-group row background--gray padding margin-bottom">
             <label
               for="income4"
-              class="col-sm-6 padding-right-none col-form-label padding-left"
+              class="col-sm-6 padding-right-none col-form-label font-weight-bold"
             >Debt to Income Ratio</label>
             <div class="col-sm-6 padding-right-none">
               <div class="input-group">
@@ -471,11 +499,17 @@ export default {
 .margin-bottom {
   margin-bottom: 0.25rem;
 }
+.color-blue {
+  color: lightseagreen;
+}
 .padding {
   padding: 5px;
 }
 .padding-label {
   padding: 1rem 5px 0px 1rem;
+}
+.padding-p {
+  padding: 0px 1rem 0px 1rem;
 }
 .padding-button {
   padding: 0px 5px 0px 5px;

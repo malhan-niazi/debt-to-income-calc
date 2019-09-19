@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <input type="text" v-model="msg" />
-    <DebtIncomeRatioCalc :msg="msg" />
+    <DebtIncomeRatioCalc msg="Debt-to-Income Calculator" />
   </div>
 </template>
 
@@ -12,11 +11,6 @@ export default {
   name: "app",
   components: {
     DebtIncomeRatioCalc
-  },
-  data() {
-    return {
-      msg: ""
-    };
   }
 };
 </script>
