@@ -9,268 +9,318 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-8 border">
-          <form id="form" v-on:submit="calculate">
+        <div class="col">
+          <form action>
             <div class="row">
               <div class="col">
-                <div class="row">
-                  <div class="col text-center">
-                    <h5>
-                      <span class="badge badge-secondary">Expense</span>
-                    </h5>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group col">
-                    <label for="text">Total First Mortgage Monthly Payment(s)</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="enter amount"
-                        v-model.number="expense.monthlyMortgagePayment"
-                        v-bind:class="{ 'is-invalid': invalidMonthlyMortgagePayment }"
-                        :disabled="expense.checked"
-                      />
-                      <div class="invalid-feedback">This field is required and must be numeric.</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group col">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="expenseInfoChecked"
-                        v-model="expense.checked"
-                      />
-                      <label
-                        class="form-check-label"
-                        for="gridCheck"
-                      >click here to fill out individual items below</label>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="expense.checked">
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="text">Monthly Payment</label>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="enter amount"
-                          v-model.number="expense.monthlyPayment"
-                          v-bind:class="{ 'is-invalid': invalidMonthlyPayment }"
-                          :disabled="!expense.checked"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="text">Annual Property Taxes</label>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="enter amount"
-                          v-model.number="expense.annualPropertyTax"
-                          v-bind:class="{ 'is-invalid': invalidAnnualPropertyTax }"
-                          :disabled="!expense.checked"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="text">Annual Property Insurance</label>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="enter amount"
-                          v-model.number="expense.annualPropertyInsurance"
-                          v-bind:class="{ 'is-invalid': invalidAnnualPropertyInsurance }"
-                          :disabled="!expense.checked"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="text">Annual HOA Fees</label>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="enter amount"
-                          v-model.number="expense.annualHoaFees"
-                          v-bind:class="{ 'is-invalid': invalidAnnualHoaFees }"
-                          :disabled="!expense.checked"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="row">
-                  <div class="col text-center">
-                    <h5>
-                      <span class="badge badge-secondary">Income</span>
-                    </h5>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group col">
-                    <label for="text">Gross Monthly Income</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="enter amount"
-                        v-model.number="income.grossIncome"
-                        v-bind:class="{ 'is-invalid': invalidGrossIncome }"
-                        :disabled="income.checked"
-                      />
-                      <div class="invalid-feedback">This field is required and must be numeric.</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group col">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="incomeInfoChecked"
-                        v-model="income.checked"
-                      />
-                      <label
-                        class="form-check-label"
-                        for="gridCheck"
-                      >click here to fill out individual items below</label>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="income.checked">
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="text">Annual Salary</label>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="enter amount"
-                          v-model.number="income.annualSalary"
-                          v-bind:class="{ 'is-invalid': invalidAnnualSalary }"
-                          :disabled="!income.checked"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="text">Spouce or Partners Annual Salary</label>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="enter amount"
-                          v-model.number="income.spouceAnnualSalary"
-                          v-bind:class="{ 'is-invalid': invalidSpouceAnnualSalary }"
-                          :disabled="!income.checked"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="text">Other Annual Income</label>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="enter amount"
-                          v-model.number="income.otherIncome"
-                          v-bind:class="{ 'is-invalid': invalidOtherIncome }"
-                          :disabled="!income.checked"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <button class="btn btn-primary">Calculate</button>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="col-4">
-          <div class="row border border-left-0">
-            <div class="col">
-              <div class="row">
-                <div class="col text-center">
+                <div class="row padding-label">
                   <h5>
-                    <span class="badge badge-secondary">Result</span>
+                    <span class>EXPENSE</span>
                   </h5>
                 </div>
               </div>
-              <div class="row">
-                <div class="col">
-                  <div class="form-group">
-                    <label for="text">Debt to Income Ratio</label>
-                    <div class="input-group">
-                      <span
-                        class="form-control"
-                        v-bind:class="{ 'is-invalid': !validForm }"
-                      >{{ ratio }}</span>
-                      <div class="input-group-append">
-                        <span class="input-group-text">%</span>
-                      </div>
-                      <div class="invalid-feedback">Missing fields</div>
+            </div>
+            <div class="form-group row background--gray padding margin-bottom">
+              <label
+                for="expense1"
+                class="col-sm-6 padding-right-none col-form-label"
+              >Total First Mortgage Monthly Payment(s)</label>
+              <div class="col-sm-6 padding-right-none">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control rounded-right"
+                    id="expense1"
+                    placeholder="Mortgage Monthly Payment(s)"
+                    v-model="expense.monthlyMortgagePayment.value"
+                    v-bind:class="{ 'is-invalid': !expense.monthlyMortgagePayment.isValid }"
+                    @input="validateMonthlyMortgagePayment"
+                    :disabled="expense.checked"
+                  />
+                  <div class="invalid-feedback">This field is required and must be numeric.</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row background--gray padding margin-bottom">
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="expenseRadio1"
+                    v-model="expense.checked"
+                    v-bind:value="false"
+                    checked
+                  />
+                  <label class="form-check-label" for="expenseRadio1">Fill out full amount</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="expenseRadio2"
+                    v-model="expense.checked"
+                    v-bind:value="true"
+                  />
+                  <label class="form-check-label" for="expenseRadio1">Fill out individual items</label>
+                </div>
+              </div>
+            </div>
+            <div v-if="expense.checked">
+              <div class="form-group row background--gray padding margin-bottom">
+                <label
+                  for="expense2"
+                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                >Monthly Payment</label>
+                <div class="col-sm-6 padding-right-none">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
                     </div>
+                    <input
+                      type="text"
+                      class="form-control rounded-right"
+                      id="expense2"
+                      placeholder="Monthly Payment"
+                      v-model="expense.monthlyPayment.value"
+                      v-bind:class="{ 'is-invalid': !expense.monthlyPayment.isValid }"
+                      @input="validateMonthlyPayment"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
                   </div>
                 </div>
+              </div>
+              <div class="form-group row background--gray padding margin-bottom">
+                <label
+                  for="expense3"
+                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                >Annual Property Taxes</label>
+                <div class="col-sm-6 padding-right-none">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control rounded-right"
+                      id="expense3"
+                      placeholder="Annual Property Taxes"
+                      v-model="expense.annualPropertyTax.value"
+                      v-bind:class="{ 'is-invalid': !expense.annualPropertyTax.isValid }"
+                      @input="validateAnnualPropertyTax"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row background--gray padding margin-bottom">
+                <label
+                  for="expense4"
+                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                >Annual Property Insurance</label>
+                <div class="col-sm-6 padding-right-none">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control rounded-right"
+                      id="expense4"
+                      placeholder="Annual Property Insurance"
+                      v-model="expense.annualPropertyInsurance.value"
+                      v-bind:class="{ 'is-invalid': !expense.annualPropertyInsurance.isValid }"
+                      @input="validateAnnualPropertyInsurance"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row background--gray padding margin-bottom">
+                <label
+                  for="expense5"
+                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                >Annual Home Owner's Association Fees</label>
+                <div class="col-sm-6 padding-right-none">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control rounded-right"
+                      id="expense5"
+                      placeholder="Annual HOA Fees"
+                      v-model="expense.annualHoaFees.value"
+                      v-bind:class="{ 'is-invalid': !expense.annualHoaFees.isValid }"
+                      @input="validateAnnualHoaFees"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="row padding-label">
+                  <h5>
+                    <span class>INCOME</span>
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row background--gray padding margin-bottom">
+              <label
+                for="income1"
+                class="col-sm-6 padding-right-none col-form-label"
+              >Gross Monthly Income</label>
+              <div class="col-sm-6 padding-right-none">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control rounded-right"
+                    id="income1"
+                    placeholder="Monthly Income"
+                    v-model="income.grossIncome.value"
+                    v-bind:class="{ 'is-invalid': !income.grossIncome.isValid }"
+                    @input="validateGrossIncome"
+                    :disabled="income.checked"
+                  />
+                  <div class="invalid-feedback">This field is required and must be numeric.</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row background--gray padding margin-bottom">
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="incomeRadio1"
+                    v-model="income.checked"
+                    v-bind:value="false"
+                    checked
+                  />
+                  <label class="form-check-label" for="incomeRadio1">Fill out full amount</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="incomeRadio2"
+                    v-model="income.checked"
+                    v-bind:value="true"
+                  />
+                  <label class="form-check-label" for="incomeRadio2">Fill out individual items</label>
+                </div>
+              </div>
+            </div>
+            <div v-if="income.checked">
+              <div class="form-group row background--gray padding margin-bottom">
+                <label
+                  for="income2"
+                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                >Annual Salary</label>
+                <div class="col-sm-6 padding-right-none">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control rounded-right"
+                      id="income2"
+                      placeholder="Annual Salary"
+                      v-model="income.annualSalary.value"
+                      v-bind:class="{ 'is-invalid': !income.annualSalary.isValid }"
+                      @input="validateAnnualSalary"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row background--gray padding margin-bottom">
+                <label
+                  for="income3"
+                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                >Spouse or Partner's Annual Salary</label>
+                <div class="col-sm-6 padding-right-none">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control rounded-right"
+                      id="income3"
+                      placeholder="Partner's Annual Salary"
+                      v-model="income.spouceAnnualSalary.value"
+                      v-bind:class="{ 'is-invalid': !income.spouceAnnualSalary.isValid }"
+                      @input="validateSpouceAnnualSalary"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row background--gray padding margin-bottom">
+                <label
+                  for="income4"
+                  class="col-sm-6 padding-right-none col-form-label padding-left"
+                >Other Annual Income</label>
+                <div class="col-sm-6 padding-right-none">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control rounded-right"
+                      id="income4"
+                      placeholder="Other Annual Income"
+                      v-model="income.otherIncome.value"
+                      v-bind:class="{ 'is-invalid': !income.otherIncome.isValid }"
+                      @input="validateOtherIncome"
+                    />
+                    <div class="invalid-feedback">This field is required and must be numeric.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col">
+                <div class="row">
+                  <button class="btn btn-primary font-weight-bold">Calculate</button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="row">
+            <div class="col">
+              <div class="row padding-label">
+                <h5>
+                  <span class>RESULT</span>
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row background--gray padding margin-bottom">
+            <label
+              for="income4"
+              class="col-sm-6 padding-right-none col-form-label padding-left"
+            >Debt to Income Ratio</label>
+            <div class="col-sm-6 padding-right-none">
+              <div class="input-group">
+                <span class="form-control" v-bind:class="{ 'is-invalid': !validForm }">{{ ratio }}</span>
+                <div class="input-group-append">
+                  <span class="input-group-text rounded-right">%</span>
+                </div>
+                <div class="invalid-feedback">{{errMsg}}</div>
               </div>
             </div>
           </div>
@@ -289,56 +339,100 @@ export default {
   data() {
     return {
       expense: {
-        monthlyMortgagePayment: null,
-        monthlyPayment: null,
-        annualPropertyTax: null,
-        annualPropertyInsurance: null,
-        annualHoaFees: null,
+        monthlyMortgagePayment: {
+          value: null,
+          isValid: true
+        },
+        monthlyPayment: {
+          value: null,
+          isValid: true
+        },
+        annualPropertyTax: {
+          value: null,
+          isValid: true
+        },
+        annualPropertyInsurance: {
+          value: null,
+          isValid: true
+        },
+        annualHoaFees: {
+          value: null,
+          isValid: true
+        },
         checked: false
       },
       income: {
-        grossIncome: null,
-        annualSalary: null,
-        spouceAnnualSalary: null,
-        otherIncome: null,
+        grossIncome: {
+          value: null,
+          isValid: true
+        },
+        annualSalary: {
+          value: null,
+          isValid: true
+        },
+        spouceAnnualSalary: {
+          value: null,
+          isValid: true
+        },
+        otherIncome: {
+          value: null,
+          isValid: true
+        },
         checked: false
       },
       ratio: null,
-      validForm: null
+      validForm: true,
+      errMsg: String
     };
   },
-  computed: {
-    invalidMonthlyMortgagePayment() {
-      return this.isInvalid(this.expense.monthlyMortgagePayment);
-    },
-    invalidMonthlyPayment() {
-      return this.isInvalid(this.expense.monthlyPayment);
-    },
-    invalidAnnualPropertyTax() {
-      return this.isInvalid(this.expense.annualPropertyTax);
-    },
-    invalidAnnualPropertyInsurance() {
-      return this.isInvalid(this.expense.annualPropertyInsurance);
-    },
-    invalidAnnualHoaFees() {
-      return this.isInvalid(this.expense.annualHoaFees);
-    },
-    invalidGrossIncome() {
-      return this.isInvalid(this.income.grossIncome);
-    },
-    invalidAnnualSalary() {
-      return this.isInvalid(this.income.annualSalary);
-    },
-    invalidSpouceAnnualSalary() {
-      return this.isInvalid(this.income.spouceAnnualSalary);
-    },
-    invalidOtherIncome() {
-      return this.isInvalid(this.income.otherIncome);
-    }
-  },
   methods: {
-    isInvalid(n) {
-      return this.isEmpty(n) || !this.isNumeric(n);
+    validateMonthlyMortgagePayment() {
+      this.expense.monthlyMortgagePayment.isValid = this.isValid(
+        this.expense.monthlyMortgagePayment.value
+      );
+    },
+    validateMonthlyPayment() {
+      this.expense.monthlyPayment.isValid = this.isValid(
+        this.expense.monthlyPayment.value
+      );
+    },
+    validateAnnualPropertyTax() {
+      this.expense.annualPropertyTax.isValid = this.isValid(
+        this.expense.annualPropertyTax.value
+      );
+    },
+    validateAnnualPropertyInsurance() {
+      this.expense.annualPropertyInsurance.isValid = this.isValid(
+        this.expense.annualPropertyInsurance.value
+      );
+    },
+    validateAnnualHoaFees() {
+      this.expense.annualHoaFees.isValid = this.isValid(
+        this.expense.annualHoaFees.value
+      );
+    },
+    validateGrossIncome() {
+      this.income.grossIncome.isValid = this.isValid(
+        this.income.grossIncome.value
+      );
+    },
+    validateAnnualSalary() {
+      this.income.annualSalary.isValid = this.isValid(
+        this.income.annualSalary.value
+      );
+    },
+    validateSpouceAnnualSalary() {
+      this.income.spouceAnnualSalary.isValid = this.isValid(
+        this.income.spouceAnnualSalary.value
+      );
+    },
+    validateOtherIncome() {
+      this.income.otherIncome.isValid = this.isValid(
+        this.income.otherIncome.value
+      );
+    },
+    isValid(n) {
+      return !this.isEmpty(n) && this.isNumeric(n);
     },
     isEmpty(n) {
       return n === "";
@@ -346,73 +440,50 @@ export default {
     isNumeric(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
     },
-    calculate(event) {
-      this.validForm = this.isValidForm();
-      if (this.validForm) {
-        if (this.expense.checked) {
-          this.computeMonthlyMortgagePayement();
-        }
-        if (this.income.checked) {
-          this.computeGrossIncome();
-        }
-        this.ratio = (
-          100 *
-          (this.expense.monthlyMortgagePayment / this.income.grossIncome)
-        ).toFixed(2);
-        event.preventDefault();
-        console.log("validForm");
-      } else {
-        event.preventDefault();
-        this.ratio = null;
-      }
-    },
     computeMonthlyMortgagePayement() {
-      this.expense.monthlyMortgagePayment = (
-        this.expense.monthlyPayment +
-        (this.expense.annualPropertyTax +
-          this.expense.annualPropertyInsurance +
-          this.expense.annualHoaFees) /
+      this.expense.monthlyMortgagePayment.value = (
+        this.expense.monthlyPayment.value +
+        (this.expense.annualPropertyTax.value +
+          this.expense.annualPropertyInsurance.value +
+          this.expense.annualHoaFees.value) /
           12
       ).toFixed(2);
     },
     computeGrossIncome() {
-      this.income.grossIncome = (
-        (this.income.annualSalary +
-          this.income.spouceAnnualSalary +
-          this.income.otherIncome) /
+      this.income.grossIncome.value = (
+        (this.income.annualSalary.value +
+          this.income.spouceAnnualSalary.value +
+          this.income.otherIncome.value) /
         12
       ).toFixed(2);
     },
-    isValidForm() {
-      if (!this.expense.checked) {
-        if (this.invalidMonthlyMortgagePayment) {
-          return false;
-        }
-      } else if (
-        this.invalidMonthlyPayment ||
-        this.invalidAnnualPropertyTax ||
-        this.invalidAnnualPropertyInsurance ||
-        this.invalidAnnualHoaFees
-      ) {
-        return false;
-      }
-      if (!this.income.checked) {
-        if (this.invalidGrossIncome) {
-          return false;
-        }
-      } else if (
-        this.invalidAnnualSalary ||
-        this.invalidSpouceAnnualSalary ||
-        this.invalidOtherIncome
-      ) {
-        return false;
-      }
-      return true;
-    }
+    isValidForm() {}
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.background--gray {
+  background-color: #f2f2f2;
+  border-radius: 5px;
+}
+.margin-bottom {
+  margin-bottom: 0.25rem;
+}
+.padding {
+  padding: 5px;
+}
+.padding-label {
+  padding: 1rem 5px 0px 1rem;
+}
+.padding-button {
+  padding: 0px 5px 0px 5px;
+}
+.padding-right-none {
+  padding-right: 15px;
+}
+.padding-left {
+  padding-left: 4rem;
+}
 </style>
