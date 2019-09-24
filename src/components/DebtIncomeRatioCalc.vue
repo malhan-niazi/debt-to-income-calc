@@ -409,8 +409,8 @@
                 <span class="form-control">{{ grossIncome }}</span>
               </div>
             </div>
-            </div>
-            <div class="form-group row background--gray padding margin-bottom">
+          </div>
+          <div class="form-group row background--gray padding margin-bottom">
             <label
               for="income4"
               class="col-sm-6 padding-right-none col-form-label font-weight-bold color-blue"
@@ -423,7 +423,6 @@
                 </div>
                 <div class="invalid-feedback">{{errMsg}}</div>
               </div>
-            </div>
             </div>
           </div>
         </div>
