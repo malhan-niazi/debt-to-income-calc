@@ -208,12 +208,12 @@
                           type="text"
                           class="form-control rounded-right"
                           id="expense5"
-                          placeholder="Enter amount"
+                          placeholder="Enter amount (optional)"
                           v-model="expense.annualHoaFees.value"
                           v-bind:class="{ 'is-invalid': !expense.annualHoaFees.isValid }"
                           @input="validateAnnualHoaFees"
                         />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
+                        <div class="invalid-feedback">This field must be numeric.</div>
                       </div>
                     </div>
                   </div>
@@ -382,6 +382,20 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col">
+              <div class="row padding-label">
+                <h5>
+                  <span class>Please Note:</span>
+                </h5>
+              </div>
+              <div class="row padding-p">
+                <p>These results have been calculated based on your inputs regarding your existing mortgage information. Your mortgage company may consider additional factors in determining your Debt-to-Income Ratio.</p>
+                <p>Please save this information (as a PDF document) or email it to yourself, so that you may have it as a reference when you speak with your mortgage company or a housing counselor.</p>
+                <p>Every situation is different. Contact your mortgage company or a housing counselor to determine your exact results and truly know your options.</p>
+              </div>
+            </div>
+          </div>
           <div class="form-group row background--gray padding margin-bottom">
             <label
               for="income4"
@@ -519,9 +533,16 @@ export default {
       );
     },
     validateAnnualHoaFees() {
-      this.expense.annualHoaFees.isValid = this.isValid(
-        this.expense.annualHoaFees.value
-      );
+      if (
+        this.expense.annualHoaFees.value == null ||
+        this.isEmpty(this.expense.annualHoaFees.value)
+      ) {
+        this.expense.annualHoaFees.isValid = true;
+      } else {
+        this.expense.annualHoaFees.isValid = this.isNumeric(
+          this.expense.annualHoaFees.value
+        );
+      }
     },
     validateGrossIncome() {
       this.income.grossIncome.isValid =
@@ -567,10 +588,9 @@ export default {
       if (this.income.checked) {
         this.computeGrossIncome();
       }
-      this.ratio = (
-        100 *
-        (parseFloat(this.expense.monthlyMortgagePayment.value) /
-          parseFloat(this.income.grossIncome.value))
+      this.ratio = this.calculateRatio(
+        this.expense.monthlyMortgagePayment.value,
+        this.income.grossIncome.value
       ).toFixed(2);
       this.formSubmit = true;
       event.preventDefault();
@@ -578,22 +598,31 @@ export default {
         $("#result-tab").tab("show");
       });
     },
+    calculateRatio(x, y) {
+      return 100 * (parseFloat(x) / parseFloat(y));
+    },
+    calcMonthlyFromAnnual(nums) {
+      let sum = 0;
+      for (let n of nums) {
+        sum += parseFloat(n);
+      }
+      return sum / 12;
+    },
     computeMonthlyMortgagePayement() {
-      this.expense.monthlyMortgagePayment.value = (
+      this.expense.monthlyMortgagePayment.value =
         parseFloat(this.expense.monthlyPayment.value) +
-        (parseFloat(this.expense.annualPropertyTax.value) +
-          parseFloat(this.expense.annualPropertyInsurance.value) +
-          parseFloat(this.expense.annualHoaFees.value)) /
-          12
-      ).toFixed(2);
+        this.calcMonthlyFromAnnual([
+          this.expense.annualPropertyTax.value,
+          this.expense.annualPropertyInsurance.value,
+          this.expense.annualHoaFees.value
+        ]).toFixed(2);
     },
     computeGrossIncome() {
-      this.income.grossIncome.value = (
-        (parseFloat(this.income.annualSalary.value) +
-          parseFloat(this.income.spouceAnnualSalary.value) +
-          parseFloat(this.income.otherIncome.value)) /
-        12
-      ).toFixed(2);
+      this.income.grossIncome.value = this.calcMonthlyFromAnnual([
+        this.income.annualSalary.value,
+        this.income.spouceAnnualSalary.value,
+        this.income.otherIncome.value
+      ]).toFixed(2);
     },
     isValidForm() {
       this.formSubmit = false;
