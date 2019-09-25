@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="calculator">
     <div class="container">
       <div class="row">
         <div class="col text-center">
@@ -50,7 +50,7 @@
                       <span class>How to Use</span>
                     </h5>
                   </div>
-                  <div class="row padding-p background--gray">
+                  <div class="row padding-p background--gray background--rounded">
                     <p>This Debt-to-Income Ratio calculator is provided to help you determine the percentage of how much you pay each month for your mortgage(s) compared to your total monthly gross income.</p>
                     <p>This calculator returns information based on your inputs regarding your existing mortgage information. It is important that you provide accurate information in order to receive more realistic results.</p>
                   </div>
@@ -59,19 +59,21 @@
               <form id="form" v-on:submit="calculate">
                 <div class="row">
                   <div class="col">
-                    <div class="row padding-label color-blue font-weight-bold">
+                    <div class="row padding-label calculator_color--blue font-weight-bold">
                       <h5>
                         <span class>Your Existing Mortgage Information</span>
                       </h5>
                     </div>
                   </div>
                 </div>
-                <div class="form-group row background--gray padding margin-bottom">
+                <div
+                  class="form-group row background--gray background--rounded padding margin--bottom"
+                >
                   <label
                     for="expense1"
-                    class="col-sm-6 padding-right-none col-form-label font-weight-bold"
+                    class="col-sm-6 padding-right col-form-label font-weight-bold"
                   >Total First Mortgage Monthly Payment(s)</label>
-                  <div class="col-sm-6 padding-right-none">
+                  <div class="col-sm-6 padding-right">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
@@ -90,10 +92,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="row padding-p background--gray margin-bottom">
+                <div class="row padding-p background--gray background--rounded margin--bottom">
                   <p>This should include your first monthly mortgage payment, as well as any additional mortgage payments you may have. It should also include principal, interest, taxes, insurance and homeowner's association fees. If you have an escrow account set up on your first mortgage, these costs will be included in your monthly payment.</p>
                 </div>
-                <div class="form-group row background--gray padding margin-bottom">
+                <div
+                  class="form-group row background--gray background--rounded padding margin--bottom"
+                >
                   <div class="col-sm-10">
                     <div class="form-check">
                       <input
@@ -125,12 +129,14 @@
                   </div>
                 </div>
                 <div v-if="expense.checked">
-                  <div class="form-group row background--gray padding margin-bottom">
+                  <div
+                    class="form-group row background--gray background--rounded padding margin--bottom"
+                  >
                     <label
                       for="expense2"
-                      class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
+                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
                     >Monthly Payment</label>
-                    <div class="col-sm-6 padding-right-none">
+                    <div class="col-sm-6 padding-right">
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
@@ -148,12 +154,14 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-group row background--gray padding margin-bottom">
+                  <div
+                    class="form-group row background--gray background--rounded padding margin--bottom"
+                  >
                     <label
                       for="expense3"
-                      class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
+                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
                     >Annual Property Taxes</label>
-                    <div class="col-sm-6 padding-right-none">
+                    <div class="col-sm-6 padding-right">
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
@@ -171,12 +179,14 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-group row background--gray padding margin-bottom">
+                  <div
+                    class="form-group row background--gray background--rounded padding margin--bottom"
+                  >
                     <label
                       for="expense4"
-                      class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
+                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
                     >Annual Property Insurance</label>
-                    <div class="col-sm-6 padding-right-none">
+                    <div class="col-sm-6 padding-right">
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
@@ -194,12 +204,14 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-group row background--gray padding margin-bottom">
+                  <div
+                    class="form-group row background--gray background--rounded padding margin--bottom"
+                  >
                     <label
                       for="expense5"
-                      class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
+                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
                     >Annual Home Owner's Association Fees</label>
-                    <div class="col-sm-6 padding-right-none">
+                    <div class="col-sm-6 padding-right">
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
@@ -220,19 +232,21 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <div class="row padding-label color-blue font-weight-bold">
+                    <div class="row padding-label calculator_color--blue font-weight-bold">
                       <h5>
                         <span class>Your Income Information</span>
                       </h5>
                     </div>
                   </div>
                 </div>
-                <div class="form-group row background--gray padding margin-bottom">
+                <div
+                  class="form-group row background--gray background--rounded padding margin--bottom"
+                >
                   <label
                     for="income1"
-                    class="col-sm-6 padding-right-none col-form-label font-weight-bold"
+                    class="col-sm-6 padding-right col-form-label font-weight-bold"
                   >Gross Monthly Income</label>
-                  <div class="col-sm-6 padding-right-none">
+                  <div class="col-sm-6 padding-right">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
@@ -253,7 +267,9 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group row background--gray padding margin-bottom">
+                <div
+                  class="form-group row background--gray background--rounded padding margin--bottom"
+                >
                   <div class="col-sm-10">
                     <div class="form-check">
                       <input
@@ -285,12 +301,14 @@
                   </div>
                 </div>
                 <div v-if="income.checked">
-                  <div class="form-group row background--gray padding margin-bottom">
+                  <div
+                    class="form-group row background--gray background--rounded padding margin--bottom"
+                  >
                     <label
                       for="income2"
-                      class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
+                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
                     >Annual Salary</label>
-                    <div class="col-sm-6 padding-right-none">
+                    <div class="col-sm-6 padding-right">
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
@@ -308,12 +326,14 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-group row background--gray padding margin-bottom">
+                  <div
+                    class="form-group row background--gray background--rounded padding margin--bottom"
+                  >
                     <label
                       for="income3"
-                      class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
+                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
                     >Spouse or Partner's Annual Salary</label>
-                    <div class="col-sm-6 padding-right-none">
+                    <div class="col-sm-6 padding-right">
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
@@ -331,12 +351,14 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-group row background--gray padding margin-bottom">
+                  <div
+                    class="form-group row background--gray background--rounded padding margin--bottom"
+                  >
                     <label
                       for="income4"
-                      class="col-sm-6 padding-right-none col-form-label padding-left font-weight-bold"
+                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
                     >Other Annual Income</label>
-                    <div class="col-sm-6 padding-right-none">
+                    <div class="col-sm-6 padding-right">
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
@@ -373,9 +395,9 @@
           aria-labelledby="result-tab"
           v-bind:class="{ 'show active': this.formSubmit }"
         >
-          <div id="result" class="row margin-bottom">
+          <div id="result" class="row margin--bottom">
             <div class="col">
-              <div class="row padding-label color-blue">
+              <div class="row padding-label calculator_color--blue">
                 <h5>
                   <span class>Your Debt-to-Income Information</span>
                 </h5>
@@ -396,12 +418,12 @@
               </div>
             </div>
           </div>
-          <div class="form-group row background--gray padding margin-bottom">
+          <div class="form-group row background--gray background--rounded padding margin--bottom">
             <label
               for="income4"
-              class="col-sm-6 padding-right-none col-form-label font-weight-bold"
+              class="col-sm-6 padding-right col-form-label font-weight-bold"
             >First Mortgage Monthly Payment</label>
-            <div class="col-sm-6 padding-right-none">
+            <div class="col-sm-6 padding-right">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text rounded-right">$</span>
@@ -410,12 +432,12 @@
               </div>
             </div>
           </div>
-          <div class="form-group row background--gray padding margin-bottom">
+          <div class="form-group row background--gray background--rounded padding margin--bottom">
             <label
               for="income4"
-              class="col-sm-6 padding-right-none col-form-label font-weight-bold"
+              class="col-sm-6 padding-right col-form-label font-weight-bold"
             >Total Gross Monthly Income</label>
-            <div class="col-sm-6 padding-right-none">
+            <div class="col-sm-6 padding-right">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text rounded-right">$</span>
@@ -424,12 +446,12 @@
               </div>
             </div>
           </div>
-          <div class="form-group row background--gray padding margin-bottom">
+          <div class="form-group row background--gray background--rounded padding margin--bottom">
             <label
               for="income4"
-              class="col-sm-6 padding-right-none col-form-label font-weight-bold color-blue"
+              class="col-sm-6 padding-right col-form-label font-weight-bold calculator_color--blue"
             >Debt-to-Income Ratio</label>
-            <div class="col-sm-6 padding-right-none">
+            <div class="col-sm-6 padding-right">
               <div class="input-group">
                 <span class="form-control" v-bind:class="{ 'is-invalid': !validForm }">{{ ratio }}</span>
                 <div class="input-group-append">
@@ -450,11 +472,9 @@ import JQuery from "jquery";
 let $ = JQuery;
 export default {
   name: "DebtIncomeRatioCalc",
-  props: {
-    msg: String
-  },
   data() {
     return {
+      msg: "Debt-to-Income Calculator",
       expense: {
         monthlyMortgagePayment: {
           value: null,
@@ -609,6 +629,12 @@ export default {
       return sum / 12;
     },
     computeMonthlyMortgagePayement() {
+      if (
+        this.expense.annualHoaFees.value == null ||
+        this.isEmpty(this.expense.annualHoaFees.value)
+      ) {
+        this.expense.annualHoaFees.value = 0;
+      }
       this.expense.monthlyMortgagePayment.value =
         parseFloat(this.expense.monthlyPayment.value) +
         this.calcMonthlyFromAnnual([
@@ -663,33 +689,41 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.background--gray {
-  background-color: #f2f2f2;
-  border-radius: 5px;
+<style lang="scss" scoped>
+.background {
+  &--gray {
+    background-color: #f2f2f2;
+  }
+  &--rounded {
+    border-radius: 5px;
+  }
 }
-.margin-bottom {
-  margin-bottom: 0.25rem;
+.margin {
+  &--bottom {
+    margin-bottom: 0.25rem;
+  }
 }
-.color-blue {
-  color: lightseagreen;
+.color {
+  &--blue {
+    color: #4dcbf2;
+  }
 }
 .padding {
   padding: 5px;
-}
-.padding-label {
-  padding: 1rem 5px 0px 1rem;
-}
-.padding-p {
-  padding: 0px 1rem 0px 1rem;
-}
-.padding-button {
-  padding: 0px 5px 0px 5px;
-}
-.padding-right-none {
-  padding-right: 15px;
-}
-.padding-left {
-  padding-left: 4rem;
+  &-label {
+    padding: 1rem 5px 0px 1rem;
+  }
+  &-p {
+    padding: 0px 1rem 0px 1rem;
+  }
+  &-button {
+    padding: 0px 5px 0px 5px;
+  }
+  &-right {
+    padding-right: 15px;
+  }
+  &-left {
+    padding-left: 4rem;
+  }
 }
 </style>
