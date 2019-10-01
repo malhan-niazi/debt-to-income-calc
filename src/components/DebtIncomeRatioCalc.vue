@@ -3,72 +3,66 @@
     <div class="container">
       <div class="row">
         <div class="col text-center">
-          <h5>
-            <h1>{{ msg }}</h1>
-          </h5>
+          <h4>{{ msg }}</h4>
         </div>
       </div>
       <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <div id="nav-tab" class="nav nav-tabs" role="tablist">
           <a
-            class="nav-item nav-link"
             id="input-tab"
+            class="nav-item nav-link"
             data-toggle="tab"
             href="#input-tab-content"
             role="tab"
             aria-controls="input"
             aria-selected="true"
-            v-bind:class="{ 'active': !this.formSubmit}"
+            :class="{ 'active': visibleTab === 0}"
           >Input</a>
           <a
-            class="nav-item nav-link"
             id="result-tab"
+            class="nav-item nav-link"
             data-toggle="tab"
             href="#result-tab-content"
             role="tab"
             aria-controls="result"
             aria-selected="false"
-            :class="[this.ratio == null ? 'disabled': '',
-                      this.formSubmit ? 'active' : '']"
+            :class="[ratio == null ? 'disabled': '',
+                     visibleTab === 1 ? 'active' : '']"
           >Result</a>
         </div>
       </nav>
-      <div class="tab-content" id="tabContent">
+      <div id="tabContent" class="tab-content">
         <div
-          class="tab-pane fade"
           id="input-tab-content"
+          class="tab-pane fade"
           role="tabpanel"
           aria-labelledby="input-tab"
-          v-bind:class="{ 'show active': !this.formSubmit}"
+          :class="{ 'show active': visibleTab === 0 }"
         >
           <div class="row">
             <div class="col">
               <div class="row">
                 <div class="col">
-                  <div class="row padding-label">
-                    <h5>
-                      <span class>How to Use</span>
-                    </h5>
+                  <div class="row padding-label padding-left--none">
+                    <h4>How to Use</h4>
                   </div>
-                  <div class="row padding-p background--gray background--rounded">
+                  <div class="row">
                     <p>This Debt-to-Income Ratio calculator is provided to help you determine the percentage of how much you pay each month for your mortgage(s) compared to your total monthly gross income.</p>
                     <p>This calculator returns information based on your inputs regarding your existing mortgage information. It is important that you provide accurate information in order to receive more realistic results.</p>
                   </div>
                 </div>
               </div>
-              <form id="form" v-on:submit="calculate">
+              <form id="form" @submit="calculate">
                 <div class="row">
                   <div class="col">
-                    <div class="row padding-label calculator_color--blue font-weight-bold">
-                      <h5>
-                        <span class>Your Existing Mortgage Information</span>
-                      </h5>
+                    <div
+                      class="row padding-label background--gray background--rounded color--blue margin--bottom"
+                    >
+                      <h4>Your Existing Mortgage Information</h4>
                     </div>
                   </div>
                 </div>
-                <div
-                  class="form-group row background--gray background--rounded padding margin--bottom"
-                >
+                <div class="form-group row background--gray background--rounded margin--bottom">
                   <label
                     for="expense1"
                     class="col-sm-6 padding-right col-form-label font-weight-bold"
@@ -79,21 +73,21 @@
                         <span class="input-group-text">$</span>
                       </div>
                       <input
+                        id="expense1"
+                        v-model="expense.monthlyMortgagePayment.value"
                         type="text"
                         class="form-control rounded-right"
-                        id="expense1"
                         placeholder="Enter amount"
-                        v-model="expense.monthlyMortgagePayment.value"
-                        v-bind:class="{ 'is-invalid': !expense.monthlyMortgagePayment.isValid }"
-                        @input="validateMonthlyMortgagePayment"
+                        :class="{ 'is-invalid': !expense.monthlyMortgagePayment.isValid }"
                         :disabled="expense.checked"
+                        @input="validate(expense.monthlyMortgagePayment)"
                       />
                       <div class="invalid-feedback">This field is required and must be numeric.</div>
                     </div>
                   </div>
-                </div>
-                <div class="row padding-p background--gray background--rounded margin--bottom">
-                  <p>This should include your first monthly mortgage payment, as well as any additional mortgage payments you may have. It should also include principal, interest, taxes, insurance and homeowner's association fees. If you have an escrow account set up on your first mortgage, these costs will be included in your monthly payment.</p>
+                  <p
+                    class="padding-p"
+                  >This should include your first monthly mortgage payment, as well as any additional mortgage payments you may have. It should also include principal, interest, taxes, insurance and homeowner's association fees. If you have an escrow account set up on your first mortgage, these costs will be included in your monthly payment.</p>
                 </div>
                 <div
                   class="form-group row background--gray background--rounded padding margin--bottom"
@@ -101,11 +95,11 @@
                   <div class="col-sm-10">
                     <div class="form-check">
                       <input
-                        class="form-check-input"
-                        type="radio"
                         id="expenseRadio1"
                         v-model="expense.checked"
-                        v-bind:value="false"
+                        class="form-check-input"
+                        type="radio"
+                        :value="false"
                         checked
                       />
                       <label
@@ -115,11 +109,11 @@
                     </div>
                     <div class="form-check">
                       <input
-                        class="form-check-input"
-                        type="radio"
                         id="expenseRadio2"
                         v-model="expense.checked"
-                        v-bind:value="true"
+                        class="form-check-input"
+                        type="radio"
+                        :value="true"
                       />
                       <label
                         class="form-check-label"
@@ -129,9 +123,7 @@
                   </div>
                 </div>
                 <div v-if="expense.checked">
-                  <div
-                    class="form-group row background--gray background--rounded padding margin--bottom"
-                  >
+                  <div class="form-group row background--gray background--rounded margin--bottom">
                     <label
                       for="expense2"
                       class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
@@ -142,21 +134,19 @@
                           <span class="input-group-text">$</span>
                         </div>
                         <input
+                          id="expense2"
+                          v-model.number="expense.monthlyPayment.value"
                           type="text"
                           class="form-control rounded-right"
-                          id="expense2"
                           placeholder="Enter amount"
-                          v-model="expense.monthlyPayment.value"
-                          v-bind:class="{ 'is-invalid': !expense.monthlyPayment.isValid }"
-                          @input="validateMonthlyPayment"
+                          :class="{ 'is-invalid': !expense.monthlyPayment.isValid }"
+                          @input="validate(expense.monthlyPayment)"
                         />
                         <div class="invalid-feedback">This field is required and must be numeric.</div>
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="form-group row background--gray background--rounded padding margin--bottom"
-                  >
+                  <div class="form-group row background--gray background--rounded margin--bottom">
                     <label
                       for="expense3"
                       class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
@@ -167,21 +157,19 @@
                           <span class="input-group-text">$</span>
                         </div>
                         <input
+                          id="expense3"
+                          v-model="expense.annualPropertyTax.value"
                           type="text"
                           class="form-control rounded-right"
-                          id="expense3"
                           placeholder="Enter amount"
-                          v-model="expense.annualPropertyTax.value"
-                          v-bind:class="{ 'is-invalid': !expense.annualPropertyTax.isValid }"
-                          @input="validateAnnualPropertyTax"
+                          :class="{ 'is-invalid': !expense.annualPropertyTax.isValid }"
+                          @input="validate(expense.annualPropertyTax)"
                         />
                         <div class="invalid-feedback">This field is required and must be numeric.</div>
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="form-group row background--gray background--rounded padding margin--bottom"
-                  >
+                  <div class="form-group row background--gray background--rounded margin--bottom">
                     <label
                       for="expense4"
                       class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
@@ -192,21 +180,19 @@
                           <span class="input-group-text">$</span>
                         </div>
                         <input
+                          id="expense4"
+                          v-model="expense.annualPropertyInsurance.value"
                           type="text"
                           class="form-control rounded-right"
-                          id="expense4"
                           placeholder="Enter amount"
-                          v-model="expense.annualPropertyInsurance.value"
-                          v-bind:class="{ 'is-invalid': !expense.annualPropertyInsurance.isValid }"
-                          @input="validateAnnualPropertyInsurance"
+                          :class="{ 'is-invalid': !expense.annualPropertyInsurance.isValid }"
+                          @input="validate(expense.annualPropertyInsurance)"
                         />
                         <div class="invalid-feedback">This field is required and must be numeric.</div>
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="form-group row background--gray background--rounded padding margin--bottom"
-                  >
+                  <div class="form-group row background--gray background--rounded margin--bottom">
                     <label
                       for="expense5"
                       class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
@@ -217,13 +203,13 @@
                           <span class="input-group-text">$</span>
                         </div>
                         <input
+                          id="expense5"
+                          v-model="expense.annualHoaFees.value"
                           type="text"
                           class="form-control rounded-right"
-                          id="expense5"
                           placeholder="Enter amount (optional)"
-                          v-model="expense.annualHoaFees.value"
-                          v-bind:class="{ 'is-invalid': !expense.annualHoaFees.isValid }"
-                          @input="validateAnnualHoaFees"
+                          :class="{ 'is-invalid': !expense.annualHoaFees.isValid }"
+                          @input="validateOptionalField(expense.annualHoaFees)"
                         />
                         <div class="invalid-feedback">This field must be numeric.</div>
                       </div>
@@ -232,16 +218,14 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <div class="row padding-label calculator_color--blue font-weight-bold">
-                      <h5>
-                        <span class>Your Income Information</span>
-                      </h5>
+                    <div
+                      class="row padding-label background--gray background--rounded color--blue margin--bottom"
+                    >
+                      <h4>Your Income Information</h4>
                     </div>
                   </div>
                 </div>
-                <div
-                  class="form-group row background--gray background--rounded padding margin--bottom"
-                >
+                <div class="form-group row background--gray background--rounded margin--bottom">
                   <label
                     for="income1"
                     class="col-sm-6 padding-right col-form-label font-weight-bold"
@@ -252,14 +236,14 @@
                         <span class="input-group-text">$</span>
                       </div>
                       <input
+                        id="income1"
+                        v-model="income.grossIncome.value"
                         type="text"
                         class="form-control rounded-right"
-                        id="income1"
                         placeholder="Enter amount"
-                        v-model="income.grossIncome.value"
-                        v-bind:class="{ 'is-invalid': !income.grossIncome.isValid }"
-                        @input="validateGrossIncome"
+                        :class="{ 'is-invalid': !income.grossIncome.isValid }"
                         :disabled="income.checked"
+                        @input="validateGreaterThanZero(income.grossIncome)"
                       />
                       <div
                         class="invalid-feedback"
@@ -267,17 +251,15 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  class="form-group row background--gray background--rounded padding margin--bottom"
-                >
+                <div class="form-group row background--gray background--rounded margin--bottom">
                   <div class="col-sm-10">
                     <div class="form-check">
                       <input
-                        class="form-check-input"
-                        type="radio"
                         id="incomeRadio1"
                         v-model="income.checked"
-                        v-bind:value="false"
+                        class="form-check-input"
+                        type="radio"
+                        :value="false"
                         checked
                       />
                       <label
@@ -287,11 +269,11 @@
                     </div>
                     <div class="form-check">
                       <input
-                        class="form-check-input"
-                        type="radio"
                         id="incomeRadio2"
                         v-model="income.checked"
-                        v-bind:value="true"
+                        class="form-check-input"
+                        type="radio"
+                        :value="true"
                       />
                       <label
                         class="form-check-label"
@@ -301,9 +283,7 @@
                   </div>
                 </div>
                 <div v-if="income.checked">
-                  <div
-                    class="form-group row background--gray background--rounded padding margin--bottom"
-                  >
+                  <div class="form-group row background--gray background--rounded margin--bottom">
                     <label
                       for="income2"
                       class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
@@ -314,21 +294,19 @@
                           <span class="input-group-text">$</span>
                         </div>
                         <input
+                          id="income2"
+                          v-model="income.annualSalary.value"
                           type="text"
                           class="form-control rounded-right"
-                          id="income2"
                           placeholder="Enter amount"
-                          v-model="income.annualSalary.value"
-                          v-bind:class="{ 'is-invalid': !income.annualSalary.isValid }"
-                          @input="validateAnnualSalary"
+                          :class="{ 'is-invalid': !income.annualSalary.isValid }"
+                          @input="validate(income.annualSalary)"
                         />
                         <div class="invalid-feedback">This field is required and must be numeric.</div>
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="form-group row background--gray background--rounded padding margin--bottom"
-                  >
+                  <div class="form-group row background--gray background--rounded margin--bottom">
                     <label
                       for="income3"
                       class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
@@ -339,21 +317,19 @@
                           <span class="input-group-text">$</span>
                         </div>
                         <input
+                          id="income3"
+                          v-model="income.spouceAnnualSalary.value"
                           type="text"
                           class="form-control rounded-right"
-                          id="income3"
                           placeholder="Enter amount"
-                          v-model="income.spouceAnnualSalary.value"
-                          v-bind:class="{ 'is-invalid': !income.spouceAnnualSalary.isValid }"
-                          @input="validateSpouceAnnualSalary"
+                          :class="{ 'is-invalid': !income.spouceAnnualSalary.isValid }"
+                          @input="validate(income.spouceAnnualSalary)"
                         />
                         <div class="invalid-feedback">This field is required and must be numeric.</div>
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="form-group row background--gray background--rounded padding margin--bottom"
-                  >
+                  <div class="form-group row background--gray background--rounded margin--bottom">
                     <label
                       for="income4"
                       class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
@@ -364,13 +340,13 @@
                           <span class="input-group-text">$</span>
                         </div>
                         <input
+                          id="income4"
+                          v-model="income.otherIncome.value"
                           type="text"
                           class="form-control rounded-right"
-                          id="income4"
                           placeholder="Enter amount"
-                          v-model="income.otherIncome.value"
-                          v-bind:class="{ 'is-invalid': !income.otherIncome.isValid }"
-                          @input="validateOtherIncome"
+                          :class="{ 'is-invalid': !income.otherIncome.isValid }"
+                          @input="validate(income.otherIncome)"
                         />
                         <div class="invalid-feedback">This field is required and must be numeric.</div>
                       </div>
@@ -389,29 +365,25 @@
           </div>
         </div>
         <div
-          class="tab-pane fade"
           id="result-tab-content"
+          class="tab-pane fade"
           role="tabpanel"
           aria-labelledby="result-tab"
-          v-bind:class="{ 'show active': this.formSubmit }"
+          :class="{ 'show active': visibleTab === 1 }"
         >
           <div id="result" class="row margin--bottom">
             <div class="col">
-              <div class="row padding-label calculator_color--blue">
-                <h5>
-                  <span class>Your Debt-to-Income Information</span>
-                </h5>
+              <div class="row padding-label color--blue padding-left--none">
+                <h4>Your Debt-to-Income Information</h4>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              <div class="row padding-label">
-                <h5>
-                  <span class>Please Note:</span>
-                </h5>
+              <div class="row padding-label padding-left--none">
+                <h4>Please Note:</h4>
               </div>
-              <div class="row padding-p">
+              <div class="row">
                 <p>These results have been calculated based on your inputs regarding your existing mortgage information. Your mortgage company may consider additional factors in determining your Debt-to-Income Ratio.</p>
                 <p>Please save this information (as a PDF document) or email it to yourself, so that you may have it as a reference when you speak with your mortgage company or a housing counselor.</p>
                 <p>Every situation is different. Contact your mortgage company or a housing counselor to determine your exact results and truly know your options.</p>
@@ -425,10 +397,9 @@
             >First Mortgage Monthly Payment</label>
             <div class="col-sm-6 padding-right">
               <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text rounded-right">$</span>
-                </div>
-                <span class="form-control">{{ monthlyMortgagePayment }}</span>
+                <span
+                  class="form-control-plaintext"
+                >${{ formatNumber(expense.monthlyMortgagePayment.value) }}</span>
               </div>
             </div>
           </div>
@@ -439,25 +410,22 @@
             >Total Gross Monthly Income</label>
             <div class="col-sm-6 padding-right">
               <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text rounded-right">$</span>
-                </div>
-                <span class="form-control">{{ grossIncome }}</span>
+                <span class="form-control-plaintext">${{ formatNumber(income.grossIncome.value) }}</span>
               </div>
             </div>
           </div>
           <div class="form-group row background--gray background--rounded padding margin--bottom">
             <label
               for="income4"
-              class="col-sm-6 padding-right col-form-label font-weight-bold calculator_color--blue"
+              class="col-sm-6 padding-right col-form-label font-weight-bold color--blue"
             >Debt-to-Income Ratio</label>
             <div class="col-sm-6 padding-right">
               <div class="input-group">
-                <span class="form-control" v-bind:class="{ 'is-invalid': !validForm }">{{ ratio }}</span>
-                <div class="input-group-append">
-                  <span class="input-group-text rounded-right">%</span>
-                </div>
-                <div class="invalid-feedback">{{errMsg}}</div>
+                <span
+                  class="form-control-plaintext"
+                  :class="{ 'is-invalid': !validForm }"
+                >{{ ratio }}%</span>
+                <div class="invalid-feedback">{{ errMsg }}</div>
               </div>
             </div>
           </div>
@@ -468,8 +436,6 @@
 </template>
 
 <script>
-import JQuery from "jquery";
-let $ = JQuery;
 export default {
   name: "DebtIncomeRatioCalc",
   data() {
@@ -520,85 +486,45 @@ export default {
       ratio: null,
       validForm: true,
       errMsg: String,
-      formSubmit: false
+      visibleTab: 0
     };
   },
-  computed: {
-    monthlyMortgagePayment() {
-      return parseFloat(this.expense.monthlyMortgagePayment.value).toFixed(2);
-    },
-    grossIncome() {
-      return parseFloat(this.income.grossIncome.value).toFixed(2);
-    }
-  },
   methods: {
-    validateMonthlyMortgagePayment() {
-      this.expense.monthlyMortgagePayment.isValid = this.isValid(
-        this.expense.monthlyMortgagePayment.value
-      );
+    formatNumber(n) {
+      return Number(n).toLocaleString();
     },
-    validateMonthlyPayment() {
-      this.expense.monthlyPayment.isValid = this.isValid(
-        this.expense.monthlyPayment.value
-      );
+    validate(input) {
+      input.isValid = this.isValid(input.value);
     },
-    validateAnnualPropertyTax() {
-      this.expense.annualPropertyTax.isValid = this.isValid(
-        this.expense.annualPropertyTax.value
-      );
-    },
-    validateAnnualPropertyInsurance() {
-      this.expense.annualPropertyInsurance.isValid = this.isValid(
-        this.expense.annualPropertyInsurance.value
-      );
-    },
-    validateAnnualHoaFees() {
-      if (
-        this.expense.annualHoaFees.value == null ||
-        this.isEmpty(this.expense.annualHoaFees.value)
-      ) {
-        this.expense.annualHoaFees.isValid = true;
+    validateOptionalField(input) {
+      if (this.isFieldOptional(input.value)) {
+        input.isValid = true;
       } else {
-        this.expense.annualHoaFees.isValid = this.isNumeric(
-          this.expense.annualHoaFees.value
-        );
+        input.isValid = this.isNumeric(input.value);
       }
     },
-    validateGrossIncome() {
-      this.income.grossIncome.isValid =
-        this.isValid(this.income.grossIncome.value) &&
-        parseFloat(this.income.grossIncome.value) > 0;
+    validateGreaterThanZero(input) {
+      input.isValid = this.isValid(input.value) && parseFloat(input.value) > 0;
     },
-    validateAnnualSalary() {
-      this.income.annualSalary.isValid = this.isValid(
-        this.income.annualSalary.value
-      );
-    },
-    validateSpouceAnnualSalary() {
-      this.income.spouceAnnualSalary.isValid = this.isValid(
-        this.income.spouceAnnualSalary.value
-      );
-    },
-    validateOtherIncome() {
-      this.income.otherIncome.isValid = this.isValid(
-        this.income.otherIncome.value
-      );
+    isFieldOptional(n) {
+      return n == null || this.isEmpty(n);
     },
     isValid(n) {
+      // replace with regex
       return !this.isEmpty(n) && this.isNumeric(n);
     },
     isEmpty(n) {
       return n === "";
     },
     isNumeric(n) {
+      // eslint-disable-next-line no-restricted-globals
       return !isNaN(parseFloat(n)) && isFinite(n);
     },
     calculate(event) {
-      this.validForm = this.isValidForm();
+      this.validForm = this.isValidForm(this.expense, this.income);
       if (!this.validForm) {
         this.errMsg = "Incorrect or missing fields.";
         this.ratio = null;
-        this.formSubmit = false;
         event.preventDefault();
         return;
       }
@@ -612,36 +538,33 @@ export default {
         this.expense.monthlyMortgagePayment.value,
         this.income.grossIncome.value
       ).toFixed(2);
-      this.formSubmit = true;
       event.preventDefault();
-      $(function() {
-        $("#result-tab").tab("show");
-      });
+      this.visibleTab = 1;
     },
     calculateRatio(x, y) {
       return 100 * (parseFloat(x) / parseFloat(y));
     },
     calcMonthlyFromAnnual(nums) {
       let sum = 0;
-      for (let n of nums) {
+      nums.forEach(n => {
         sum += parseFloat(n);
-      }
+      });
       return sum / 12;
     },
     computeMonthlyMortgagePayement() {
-      if (
-        this.expense.annualHoaFees.value == null ||
-        this.isEmpty(this.expense.annualHoaFees.value)
-      ) {
+      if (this.isFieldOptional(this.expense.annualHoaFees.value)) {
         this.expense.annualHoaFees.value = 0;
       }
-      this.expense.monthlyMortgagePayment.value =
+      this.expense.monthlyMortgagePayment.value = (
         parseFloat(this.expense.monthlyPayment.value) +
-        this.calcMonthlyFromAnnual([
-          this.expense.annualPropertyTax.value,
-          this.expense.annualPropertyInsurance.value,
-          this.expense.annualHoaFees.value
-        ]).toFixed(2);
+        parseFloat(
+          this.calcMonthlyFromAnnual([
+            this.expense.annualPropertyTax.value,
+            this.expense.annualPropertyInsurance.value,
+            this.expense.annualHoaFees.value
+          ])
+        )
+      ).toFixed(2);
     },
     computeGrossIncome() {
       this.income.grossIncome.value = this.calcMonthlyFromAnnual([
@@ -650,37 +573,36 @@ export default {
         this.income.otherIncome.value
       ]).toFixed(2);
     },
-    isValidForm() {
-      this.formSubmit = false;
-      var isIncomeValid = true;
-      var isExpenseValid = true;
-      if (this.expense.checked) {
-        this.validateMonthlyPayment();
-        this.validateAnnualPropertyTax();
-        this.validateAnnualPropertyInsurance();
-        this.validateAnnualHoaFees();
+    isValidForm(expense, income) {
+      let isIncomeValid = true;
+      let isExpenseValid = true;
+      if (expense.checked) {
+        this.validate(expense.monthlyPayment);
+        this.validate(expense.annualPropertyTax);
+        this.validate(expense.annualPropertyInsurance);
+        this.validateOptionalField(expense.annualHoaFees);
         isExpenseValid =
-          this.expense.monthlyPayment.isValid &&
-          this.expense.annualPropertyTax.isValid &&
-          this.expense.annualPropertyInsurance.isValid &&
-          this.expense.annualHoaFees.isValid;
-        this.expense.monthlyMortgagePayment.isValid = true;
+          expense.monthlyPayment.isValid &&
+          expense.annualPropertyTax.isValid &&
+          expense.annualPropertyInsurance.isValid &&
+          expense.annualHoaFees.isValid;
+        expense.monthlyMortgagePayment.isValid = true;
       } else {
-        this.validateMonthlyMortgagePayment();
-        isExpenseValid = this.expense.monthlyMortgagePayment.isValid;
+        this.validate(expense.monthlyMortgagePayment);
+        isExpenseValid = expense.monthlyMortgagePayment.isValid;
       }
-      if (this.income.checked) {
-        this.validateAnnualSalary();
-        this.validateSpouceAnnualSalary();
-        this.validateOtherIncome();
+      if (income.checked) {
+        this.validate(income.annualSalary);
+        this.validate(income.spouceAnnualSalary);
+        this.validate(income.otherIncome);
         isIncomeValid =
-          this.income.annualSalary.isValid &&
-          this.income.spouceAnnualSalary.isValid &&
-          this.income.otherIncome.isValid;
-        this.income.grossIncome.isValid = true;
+          income.annualSalary.isValid &&
+          income.spouceAnnualSalary.isValid &&
+          income.otherIncome.isValid;
+        income.grossIncome.isValid = true;
       } else {
-        this.validateGrossIncome();
-        isIncomeValid = this.income.grossIncome.isValid;
+        this.validateGreaterThanZero(income.grossIncome);
+        isIncomeValid = income.grossIncome.isValid;
       }
       return isIncomeValid && isExpenseValid;
     }
@@ -705,13 +627,13 @@ export default {
 }
 .color {
   &--blue {
-    color: #4dcbf2;
+    color: #007697;
   }
 }
 .padding {
   padding: 5px;
   &-label {
-    padding: 1rem 5px 0px 1rem;
+    padding: 1rem 1rem 5px 1rem;
   }
   &-p {
     padding: 0px 1rem 0px 1rem;
@@ -724,6 +646,9 @@ export default {
   }
   &-left {
     padding-left: 4rem;
+    &--none {
+      padding-left: 0px;
+    }
   }
 }
 </style>
