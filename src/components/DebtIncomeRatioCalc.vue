@@ -27,7 +27,7 @@
             role="tab"
             aria-controls="result"
             aria-selected="false"
-            :class="[ratio == null ? 'disabled': '',
+            :class="[result.ratio == null ? 'disabled': '',
                      visibleTab === 1 ? 'active' : '']"
             @click="visibleTab = 1"
           >Result</a>

@@ -39,7 +39,7 @@
                   type="text"
                   class="form-control rounded-right"
                   placeholder="Enter amount"
-                  :class="{ 'is-invalid': !expense.monthlyMortgagePayment.isValid }"
+                  :class="{ 'is-invalid': !expense.checked && !expense.monthlyMortgagePayment.isValid }"
                   :disabled="expense.checked"
                   @input="validate(expense.monthlyMortgagePayment)"
                 />
@@ -200,7 +200,7 @@
                   type="text"
                   class="form-control rounded-right"
                   placeholder="Enter amount"
-                  :class="{ 'is-invalid': !income.grossIncome.isValid }"
+                  :class="{ 'is-invalid': !income.checked && !income.grossIncome.isValid }"
                   :disabled="income.checked"
                   @input="validateGreaterThanZero(income.grossIncome)"
                 />
