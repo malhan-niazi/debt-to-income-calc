@@ -17,6 +17,7 @@
             aria-controls="input"
             aria-selected="true"
             :class="{ 'active': visibleTab === 0}"
+            @click="visibleTab = 0"
           >Input</a>
           <a
             id="result-tab"
@@ -28,6 +29,7 @@
             aria-selected="false"
             :class="[ratio == null ? 'disabled': '',
                      visibleTab === 1 ? 'active' : '']"
+            @click="visibleTab = 1"
           >Result</a>
         </div>
       </nav>
@@ -39,330 +41,7 @@
           aria-labelledby="input-tab"
           :class="{ 'show active': visibleTab === 0 }"
         >
-          <div class="row">
-            <div class="col">
-              <div class="row">
-                <div class="col">
-                  <div class="row padding-label padding-left--none">
-                    <h4>How to Use</h4>
-                  </div>
-                  <div class="row">
-                    <p>This Debt-to-Income Ratio calculator is provided to help you determine the percentage of how much you pay each month for your mortgage(s) compared to your total monthly gross income.</p>
-                    <p>This calculator returns information based on your inputs regarding your existing mortgage information. It is important that you provide accurate information in order to receive more realistic results.</p>
-                  </div>
-                </div>
-              </div>
-              <form id="form" @submit="calculate">
-                <div class="row">
-                  <div class="col">
-                    <div
-                      class="row padding-label background--gray background--rounded color--blue margin--bottom"
-                    >
-                      <h4>Your Existing Mortgage Information</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row background--gray background--rounded margin--bottom">
-                  <label
-                    for="expense1"
-                    class="col-sm-6 padding-right col-form-label font-weight-bold"
-                  >Total First Mortgage Monthly Payment(s)</label>
-                  <div class="col-sm-6 padding-right">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                      </div>
-                      <input
-                        id="expense1"
-                        v-model="expense.monthlyMortgagePayment.value"
-                        type="text"
-                        class="form-control rounded-right"
-                        placeholder="Enter amount"
-                        :class="{ 'is-invalid': !expense.monthlyMortgagePayment.isValid }"
-                        :disabled="expense.checked"
-                        @input="validate(expense.monthlyMortgagePayment)"
-                      />
-                      <div class="invalid-feedback">This field is required and must be numeric.</div>
-                    </div>
-                  </div>
-                  <p
-                    class="padding-p"
-                  >This should include your first monthly mortgage payment, as well as any additional mortgage payments you may have. It should also include principal, interest, taxes, insurance and homeowner's association fees. If you have an escrow account set up on your first mortgage, these costs will be included in your monthly payment.</p>
-                </div>
-                <div
-                  class="form-group row background--gray background--rounded padding margin--bottom"
-                >
-                  <div class="col-sm-10">
-                    <div class="form-check">
-                      <input
-                        id="expenseRadio1"
-                        v-model="expense.checked"
-                        class="form-check-input"
-                        type="radio"
-                        :value="false"
-                        checked
-                      />
-                      <label
-                        class="form-check-label"
-                        for="expenseRadio1"
-                      >Fill out consolidated Mortgage Monthly Payment(s) above.</label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        id="expenseRadio2"
-                        v-model="expense.checked"
-                        class="form-check-input"
-                        type="radio"
-                        :value="true"
-                      />
-                      <label
-                        class="form-check-label"
-                        for="expenseRadio1"
-                      >If not, click here and fill in the information below.</label>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="expense.checked">
-                  <div class="form-group row background--gray background--rounded margin--bottom">
-                    <label
-                      for="expense2"
-                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
-                    >Monthly Payment</label>
-                    <div class="col-sm-6 padding-right">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          id="expense2"
-                          v-model.number="expense.monthlyPayment.value"
-                          type="text"
-                          class="form-control rounded-right"
-                          placeholder="Enter amount"
-                          :class="{ 'is-invalid': !expense.monthlyPayment.isValid }"
-                          @input="validate(expense.monthlyPayment)"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row background--gray background--rounded margin--bottom">
-                    <label
-                      for="expense3"
-                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
-                    >Annual Property Taxes</label>
-                    <div class="col-sm-6 padding-right">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          id="expense3"
-                          v-model="expense.annualPropertyTax.value"
-                          type="text"
-                          class="form-control rounded-right"
-                          placeholder="Enter amount"
-                          :class="{ 'is-invalid': !expense.annualPropertyTax.isValid }"
-                          @input="validate(expense.annualPropertyTax)"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row background--gray background--rounded margin--bottom">
-                    <label
-                      for="expense4"
-                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
-                    >Annual Property Insurance</label>
-                    <div class="col-sm-6 padding-right">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          id="expense4"
-                          v-model="expense.annualPropertyInsurance.value"
-                          type="text"
-                          class="form-control rounded-right"
-                          placeholder="Enter amount"
-                          :class="{ 'is-invalid': !expense.annualPropertyInsurance.isValid }"
-                          @input="validate(expense.annualPropertyInsurance)"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row background--gray background--rounded margin--bottom">
-                    <label
-                      for="expense5"
-                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
-                    >Annual Home Owner's Association Fees</label>
-                    <div class="col-sm-6 padding-right">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          id="expense5"
-                          v-model="expense.annualHoaFees.value"
-                          type="text"
-                          class="form-control rounded-right"
-                          placeholder="Enter amount (optional)"
-                          :class="{ 'is-invalid': !expense.annualHoaFees.isValid }"
-                          @input="validateOptionalField(expense.annualHoaFees)"
-                        />
-                        <div class="invalid-feedback">This field must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <div
-                      class="row padding-label background--gray background--rounded color--blue margin--bottom"
-                    >
-                      <h4>Your Income Information</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row background--gray background--rounded margin--bottom">
-                  <label
-                    for="income1"
-                    class="col-sm-6 padding-right col-form-label font-weight-bold"
-                  >Gross Monthly Income</label>
-                  <div class="col-sm-6 padding-right">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                      </div>
-                      <input
-                        id="income1"
-                        v-model="income.grossIncome.value"
-                        type="text"
-                        class="form-control rounded-right"
-                        placeholder="Enter amount"
-                        :class="{ 'is-invalid': !income.grossIncome.isValid }"
-                        :disabled="income.checked"
-                        @input="validateGreaterThanZero(income.grossIncome)"
-                      />
-                      <div
-                        class="invalid-feedback"
-                      >This field is required, must be numeric, and greater than 0</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row background--gray background--rounded margin--bottom">
-                  <div class="col-sm-10">
-                    <div class="form-check">
-                      <input
-                        id="incomeRadio1"
-                        v-model="income.checked"
-                        class="form-check-input"
-                        type="radio"
-                        :value="false"
-                        checked
-                      />
-                      <label
-                        class="form-check-label"
-                        for="incomeRadio1"
-                      >Fill out consolidated Gross Monthly Income above.</label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        id="incomeRadio2"
-                        v-model="income.checked"
-                        class="form-check-input"
-                        type="radio"
-                        :value="true"
-                      />
-                      <label
-                        class="form-check-label"
-                        for="incomeRadio2"
-                      >If you are unsure of this amount, click here and fill in the information below.</label>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="income.checked">
-                  <div class="form-group row background--gray background--rounded margin--bottom">
-                    <label
-                      for="income2"
-                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
-                    >Annual Salary</label>
-                    <div class="col-sm-6 padding-right">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          id="income2"
-                          v-model="income.annualSalary.value"
-                          type="text"
-                          class="form-control rounded-right"
-                          placeholder="Enter amount"
-                          :class="{ 'is-invalid': !income.annualSalary.isValid }"
-                          @input="validate(income.annualSalary)"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row background--gray background--rounded margin--bottom">
-                    <label
-                      for="income3"
-                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
-                    >Spouse or Partner's Annual Salary</label>
-                    <div class="col-sm-6 padding-right">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          id="income3"
-                          v-model="income.spouceAnnualSalary.value"
-                          type="text"
-                          class="form-control rounded-right"
-                          placeholder="Enter amount"
-                          :class="{ 'is-invalid': !income.spouceAnnualSalary.isValid }"
-                          @input="validate(income.spouceAnnualSalary)"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row background--gray background--rounded margin--bottom">
-                    <label
-                      for="income4"
-                      class="col-sm-6 padding-right col-form-label padding-left font-weight-bold"
-                    >Other Annual Income</label>
-                    <div class="col-sm-6 padding-right">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">$</span>
-                        </div>
-                        <input
-                          id="income4"
-                          v-model="income.otherIncome.value"
-                          type="text"
-                          class="form-control rounded-right"
-                          placeholder="Enter amount"
-                          :class="{ 'is-invalid': !income.otherIncome.isValid }"
-                          @input="validate(income.otherIncome)"
-                        />
-                        <div class="invalid-feedback">This field is required and must be numeric.</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col">
-                    <div class="row">
-                      <button class="btn btn-primary font-weight-bold">Calculate</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
+          <InputComponent v-on:submit-form="displayResults"></InputComponent>
         </div>
         <div
           id="result-tab-content"
@@ -371,64 +50,7 @@
           aria-labelledby="result-tab"
           :class="{ 'show active': visibleTab === 1 }"
         >
-          <div id="result" class="row margin--bottom">
-            <div class="col">
-              <div class="row padding-label color--blue padding-left--none">
-                <h4>Your Debt-to-Income Information</h4>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="row padding-label padding-left--none">
-                <h4>Please Note:</h4>
-              </div>
-              <div class="row">
-                <p>These results have been calculated based on your inputs regarding your existing mortgage information. Your mortgage company may consider additional factors in determining your Debt-to-Income Ratio.</p>
-                <p>Please save this information (as a PDF document) or email it to yourself, so that you may have it as a reference when you speak with your mortgage company or a housing counselor.</p>
-                <p>Every situation is different. Contact your mortgage company or a housing counselor to determine your exact results and truly know your options.</p>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row background--gray background--rounded padding margin--bottom">
-            <label
-              for="income4"
-              class="col-sm-6 padding-right col-form-label font-weight-bold"
-            >First Mortgage Monthly Payment</label>
-            <div class="col-sm-6 padding-right">
-              <div class="input-group">
-                <span
-                  class="form-control-plaintext"
-                >${{ formatNumber(expense.monthlyMortgagePayment.value) }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row background--gray background--rounded padding margin--bottom">
-            <label
-              for="income4"
-              class="col-sm-6 padding-right col-form-label font-weight-bold"
-            >Total Gross Monthly Income</label>
-            <div class="col-sm-6 padding-right">
-              <div class="input-group">
-                <span class="form-control-plaintext">${{ formatNumber(income.grossIncome.value) }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row background--gray background--rounded padding margin--bottom">
-            <label
-              for="income4"
-              class="col-sm-6 padding-right col-form-label font-weight-bold color--blue"
-            >Debt-to-Income Ratio</label>
-            <div class="col-sm-6 padding-right">
-              <div class="input-group">
-                <span
-                  class="form-control-plaintext"
-                  :class="{ 'is-invalid': !validForm }"
-                >{{ ratio }}%</span>
-                <div class="invalid-feedback">{{ errMsg }}</div>
-              </div>
-            </div>
-          </div>
+          <ResultComponent v-bind:result="result"></ResultComponent>
         </div>
       </div>
     </div>
@@ -436,175 +58,38 @@
 </template>
 
 <script>
+import InputComponent from "./InputComponent.vue";
+import ResultComponent from "./ResultComponent.vue";
+
 export default {
   name: "DebtIncomeRatioCalc",
+  components: {
+    InputComponent,
+    ResultComponent
+  },
   data() {
     return {
       msg: "Debt-to-Income Calculator",
-      expense: {
-        monthlyMortgagePayment: {
-          value: null,
-          isValid: true
-        },
-        monthlyPayment: {
-          value: null,
-          isValid: true
-        },
-        annualPropertyTax: {
-          value: null,
-          isValid: true
-        },
-        annualPropertyInsurance: {
-          value: null,
-          isValid: true
-        },
-        annualHoaFees: {
-          value: null,
-          isValid: true
-        },
-        checked: false
+      result: {
+        expense: null,
+        income: null,
+        ratio: null
       },
-      income: {
-        grossIncome: {
-          value: null,
-          isValid: true
-        },
-        annualSalary: {
-          value: null,
-          isValid: true
-        },
-        spouceAnnualSalary: {
-          value: null,
-          isValid: true
-        },
-        otherIncome: {
-          value: null,
-          isValid: true
-        },
-        checked: false
-      },
-      ratio: null,
-      validForm: true,
-      errMsg: String,
       visibleTab: 0
     };
   },
   methods: {
-    formatNumber(n) {
-      return Number(n).toLocaleString();
-    },
-    validate(input) {
-      input.isValid = this.isValid(input.value);
-    },
-    validateOptionalField(input) {
-      if (this.isFieldOptional(input.value)) {
-        input.isValid = true;
-      } else {
-        input.isValid = this.isNumeric(input.value);
-      }
-    },
-    validateGreaterThanZero(input) {
-      input.isValid = this.isValid(input.value) && parseFloat(input.value) > 0;
-    },
-    isFieldOptional(n) {
-      return n == null || this.isEmpty(n);
-    },
-    isValid(n) {
-      // replace with regex
-      return !this.isEmpty(n) && this.isNumeric(n);
-    },
-    isEmpty(n) {
-      return n === "";
-    },
-    isNumeric(n) {
-      // eslint-disable-next-line no-restricted-globals
-      return !isNaN(parseFloat(n)) && isFinite(n);
-    },
-    calculate(event) {
-      this.validForm = this.isValidForm(this.expense, this.income);
-      if (!this.validForm) {
-        this.errMsg = "Incorrect or missing fields.";
-        this.ratio = null;
-        event.preventDefault();
-        return;
-      }
-      if (this.expense.checked) {
-        this.computeMonthlyMortgagePayement();
-      }
-      if (this.income.checked) {
-        this.computeGrossIncome();
-      }
-      this.ratio = this.calculateRatio(
-        this.expense.monthlyMortgagePayment.value,
-        this.income.grossIncome.value
-      ).toFixed(2);
-      event.preventDefault();
+    displayResults(expense, income) {
+      this.result.expense = parseFloat(expense);
+      this.result.income = parseFloat(income);
+      this.result.ratio = this.calculateRatio(
+        this.result.expense,
+        this.result.income
+      );
       this.visibleTab = 1;
     },
     calculateRatio(x, y) {
       return 100 * (parseFloat(x) / parseFloat(y));
-    },
-    calcMonthlyFromAnnual(nums) {
-      let sum = 0;
-      nums.forEach(n => {
-        sum += parseFloat(n);
-      });
-      return sum / 12;
-    },
-    computeMonthlyMortgagePayement() {
-      if (this.isFieldOptional(this.expense.annualHoaFees.value)) {
-        this.expense.annualHoaFees.value = 0;
-      }
-      this.expense.monthlyMortgagePayment.value = (
-        parseFloat(this.expense.monthlyPayment.value) +
-        parseFloat(
-          this.calcMonthlyFromAnnual([
-            this.expense.annualPropertyTax.value,
-            this.expense.annualPropertyInsurance.value,
-            this.expense.annualHoaFees.value
-          ])
-        )
-      ).toFixed(2);
-    },
-    computeGrossIncome() {
-      this.income.grossIncome.value = this.calcMonthlyFromAnnual([
-        this.income.annualSalary.value,
-        this.income.spouceAnnualSalary.value,
-        this.income.otherIncome.value
-      ]).toFixed(2);
-    },
-    isValidForm(expense, income) {
-      let isIncomeValid = true;
-      let isExpenseValid = true;
-      if (expense.checked) {
-        this.validate(expense.monthlyPayment);
-        this.validate(expense.annualPropertyTax);
-        this.validate(expense.annualPropertyInsurance);
-        this.validateOptionalField(expense.annualHoaFees);
-        isExpenseValid =
-          expense.monthlyPayment.isValid &&
-          expense.annualPropertyTax.isValid &&
-          expense.annualPropertyInsurance.isValid &&
-          expense.annualHoaFees.isValid;
-        expense.monthlyMortgagePayment.isValid = true;
-      } else {
-        this.validate(expense.monthlyMortgagePayment);
-        isExpenseValid = expense.monthlyMortgagePayment.isValid;
-      }
-      if (income.checked) {
-        this.validate(income.annualSalary);
-        this.validate(income.spouceAnnualSalary);
-        this.validate(income.otherIncome);
-        isIncomeValid =
-          income.annualSalary.isValid &&
-          income.spouceAnnualSalary.isValid &&
-          income.otherIncome.isValid;
-        income.grossIncome.isValid = true;
-      } else {
-        this.validateGreaterThanZero(income.grossIncome);
-        isIncomeValid = income.grossIncome.isValid;
-      }
-      return isIncomeValid && isExpenseValid;
     }
   }
 };
@@ -612,43 +97,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.background {
-  &--gray {
-    background-color: #f2f2f2;
-  }
-  &--rounded {
-    border-radius: 5px;
-  }
-}
-.margin {
-  &--bottom {
-    margin-bottom: 0.25rem;
-  }
-}
-.color {
-  &--blue {
-    color: #007697;
-  }
-}
-.padding {
-  padding: 5px;
-  &-label {
-    padding: 1rem 1rem 5px 1rem;
-  }
-  &-p {
-    padding: 0px 1rem 0px 1rem;
-  }
-  &-button {
-    padding: 0px 5px 0px 5px;
-  }
-  &-right {
-    padding-right: 15px;
-  }
-  &-left {
-    padding-left: 4rem;
-    &--none {
-      padding-left: 0px;
-    }
-  }
-}
 </style>
