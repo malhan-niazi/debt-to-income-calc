@@ -89,7 +89,7 @@ export default {
       this.visibleTab = 1;
     },
     calculateRatio(x, y) {
-      return 100 * (parseFloat(x) / parseFloat(y));
+      return (100 * (parseFloat(x) / parseFloat(y))).toFixed(2);
     }
   }
 };

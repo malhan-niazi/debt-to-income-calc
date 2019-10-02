@@ -48,7 +48,7 @@
       >Debt-to-Income Ratio</label>
       <div class="col-sm-6 padding-right">
         <div class="input-group">
-          <span class="form-control-plaintext">{{ result.ratio }}%</span>
+          <span class="form-control-plaintext">{{ formatNumber(result.ratio) }}%</span>
         </div>
       </div>
     </div>
