@@ -109,7 +109,7 @@
           </div>
           <InputFieldComponent
             v-bind:inputField="income.grossIncome"
-            v-on:enter-value="validate"
+            v-on:enter-value="validateGreaterThanZero"
             v-bind:isInvalid="!income.checked && !income.grossIncome.isValid"
             v-bind:isDisabled="income.checked"
           ></InputFieldComponent>
