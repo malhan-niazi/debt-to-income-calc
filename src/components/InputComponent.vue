@@ -8,8 +8,17 @@
               <h4>How to Use</h4>
             </div>
             <div class="row">
-              <p>This Debt-to-Income Ratio calculator is provided to help you determine the percentage of how much you pay each month for your mortgage(s) compared to your total monthly gross income.</p>
-              <p>This calculator returns information based on your inputs regarding your existing mortgage information. It is important that you provide accurate information in order to receive more realistic results.</p>
+              <p>
+                This Debt-to-Income Ratio calculator is provided to help you
+                determine the percentage of how much you pay each month for your
+                mortgage(s) compared to your total monthly gross income.
+              </p>
+              <p>
+                This calculator returns information based on your inputs
+                regarding your existing mortgage information. It is important
+                that you provide accurate information in order to receive more
+                realistic results.
+              </p>
             </div>
           </div>
         </div>
@@ -26,19 +35,41 @@
           <InputFieldComponent
             v-bind:inputField="expense.monthlyMortgagePayment"
             v-on:enter-value="validate"
-            v-bind:isInvalid="!expense.checked && !expense.monthlyMortgagePayment.isValid"
+            v-bind:isInvalid="
+              !expense.checked && !expense.monthlyMortgagePayment.isValid
+            "
             v-bind:isDisabled="expense.checked"
           ></InputFieldComponent>
-          <div class="form-group row background--gray background--rounded padding margin--bottom">
+          <div
+            class="form-group row background--gray background--rounded padding margin--bottom"
+          >
             <div class="col-sm-10">
-              <RadioButtonComponent
-                v-bind:selected="expense.checked"
-                v-bind:radio="expense.radioOne"
-              ></RadioButtonComponent>
-              <RadioButtonComponent
-                v-bind:selected="expense.checked"
-                v-bind:radio="expense.radioTwo"
-              ></RadioButtonComponent>
+              <div class="form-check">
+                <input
+                  :id="expense.radioOne.id"
+                  v-model="expense.checked"
+                  class="form-check-input"
+                  type="radio"
+                  :value="expense.radioOne.value"
+                  :checked="expense.radioOne.isDefault"
+                />
+                <label class="form-check-label" :for="expense.radioOne.id">{{
+                  expense.radioOne.label
+                }}</label>
+              </div>
+              <div class="form-check">
+                <input
+                  :id="expense.radioTwo.id"
+                  v-model="expense.checked"
+                  class="form-check-input"
+                  type="radio"
+                  :value="expense.radioTwo.value"
+                  :checked="expense.radioTwo.isDefault"
+                />
+                <label class="form-check-label" :for="expense.radioTwo.id">{{
+                  expense.radioTwo.label
+                }}</label>
+              </div>
             </div>
           </div>
           <div v-if="expense.checked">
@@ -82,10 +113,36 @@
             v-bind:isInvalid="!income.checked && !income.grossIncome.isValid"
             v-bind:isDisabled="income.checked"
           ></InputFieldComponent>
-          <div class="form-group row background--gray background--rounded margin--bottom">
+          <div
+            class="form-group row background--gray background--rounded margin--bottom"
+          >
             <div class="col-sm-10">
-              <RadioButtonComponent v-bind:checked="income.checked" v-bind:radio="income.radioOne"></RadioButtonComponent>
-              <RadioButtonComponent v-bind:checked="income.checked" v-bind:radio="income.radioTwo"></RadioButtonComponent>
+              <div class="form-check">
+                <input
+                  :id="income.radioOne.id"
+                  v-model="income.checked"
+                  class="form-check-input"
+                  type="radio"
+                  :value="income.radioOne.value"
+                  :checked="income.radioOne.isDefault"
+                />
+                <label class="form-check-label" :for="income.radioOne.id">{{
+                  income.radioOne.label
+                }}</label>
+              </div>
+              <div class="form-check">
+                <input
+                  :id="income.radioTwo.id"
+                  v-model="income.checked"
+                  class="form-check-input"
+                  type="radio"
+                  :value="income.radioTwo.value"
+                  :checked="income.radioTwo.isDefault"
+                />
+                <label class="form-check-label" :for="income.radioTwo.id">{{
+                  income.radioTwo.label
+                }}</label>
+              </div>
             </div>
           </div>
           <div v-if="income.checked">
@@ -111,7 +168,9 @@
           <div class="form-group row">
             <div class="col">
               <div class="row">
-                <button class="btn btn-primary font-weight-bold">Calculate</button>
+                <button class="btn btn-primary font-weight-bold">
+                  Calculate
+                </button>
               </div>
             </div>
           </div>
@@ -123,13 +182,11 @@
 
 <script>
 import InputFieldComponent from "./InputFieldComponent";
-import RadioButtonComponent from "./RadioButtonComponent";
 
 export default {
   name: "InputComponent",
   components: {
-    InputFieldComponent,
-    RadioButtonComponent
+    InputFieldComponent
   },
   data() {
     return {
@@ -195,7 +252,7 @@ export default {
           hasIcon: true,
           icon: "$",
           type: "text",
-          placeHolder: "Enter Amount",
+          placeHolder: "Enter Amount (Optional)",
           errorMsg: "This field must be numeric.",
           hasDesc: false,
           desc: ""
