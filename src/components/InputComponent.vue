@@ -196,12 +196,10 @@ export default {
           value: null,
           isValid: true,
           label: "Total First Mortgage Monthly Payment(s)",
-          hasIcon: true,
           icon: "$",
           type: "text",
           placeHolder: "Enter Amount",
           errorMsg: "This field is required and must be numeric.",
-          hasDesc: true,
           desc:
             "This should include your first monthly mortgage payment, as well as any additional mortgage payments you may have. It should also include principal, interest, taxes, insurance and homeowner's association fees. If you have an escrow account set up on your first mortgage, these costs will be included in your monthly payment."
         },
@@ -210,52 +208,40 @@ export default {
           value: null,
           isValid: true,
           label: "Monthly Payment",
-          hasIcon: true,
           icon: "$",
           type: "text",
           placeHolder: "Enter Amount",
-          errorMsg: "This field is required and must be numeric.",
-          hasDesc: false,
-          desc: ""
+          errorMsg: "This field is required and must be numeric."
         },
         annualPropertyTax: {
           id: "annualPropertyTax",
           value: null,
           isValid: true,
           label: "Annual Property Taxes",
-          hasIcon: true,
           icon: "$",
           type: "text",
           placeHolder: "Enter Amount",
-          errorMsg: "This field is required and must be numeric.",
-          hasDesc: false,
-          desc: ""
+          errorMsg: "This field is required and must be numeric."
         },
         annualPropertyInsurance: {
           id: "annualPropertyInsurance",
           value: null,
           isValid: true,
           label: "Annual Property Insurance",
-          hasIcon: true,
           icon: "$",
           type: "text",
           placeHolder: "Enter Amount",
-          errorMsg: "This field is required and must be numeric.",
-          hasDesc: false,
-          desc: ""
+          errorMsg: "This field is required and must be numeric."
         },
         annualHoaFees: {
           id: "annualHoaFees",
           value: null,
           isValid: true,
           label: "Annual Home Owner's Association Fees",
-          hasIcon: true,
           icon: "$",
           type: "text",
           placeHolder: "Enter Amount (Optional)",
-          errorMsg: "This field must be numeric.",
-          hasDesc: false,
-          desc: ""
+          errorMsg: "This field must be numeric."
         },
         checked: false,
         radioOne: {
@@ -277,52 +263,40 @@ export default {
           value: null,
           isValid: true,
           label: "Gross Monthly Income",
-          hasIcon: true,
           icon: "$",
           type: "text",
           placeHolder: "Enter Amount",
-          errorMsg: "This field is required and must be numeric.",
-          hasDesc: false,
-          desc: ""
+          errorMsg: "This field is required and must be numeric."
         },
         annualSalary: {
           id: "annualSalary",
           value: null,
           isValid: true,
           label: "Annual Salary",
-          hasIcon: true,
           icon: "$",
           type: "text",
           placeHolder: "Enter Amount",
-          errorMsg: "This field is required and must be numeric.",
-          hasDesc: false,
-          desc: ""
+          errorMsg: "This field is required and must be numeric."
         },
         spouceAnnualSalary: {
           id: "spouceAnnualSalary",
           value: null,
           isValid: true,
           label: "Spouse or Partner's Annual Salary",
-          hasIcon: true,
           icon: "$",
           type: "text",
           placeHolder: "Enter Amount",
-          errorMsg: "This field is required and must be numeric.",
-          hasDesc: false,
-          desc: ""
+          errorMsg: "This field is required and must be numeric."
         },
         otherIncome: {
           id: "otherIncome",
           value: null,
           isValid: true,
           label: "Other Annual Income",
-          hasIcon: true,
           icon: "$",
           type: "text",
           placeHolder: "Enter Amount",
-          errorMsg: "This field is required and must be numeric.",
-          hasDesc: false,
-          desc: ""
+          errorMsg: "This field is required and must be numeric."
         },
         checked: false,
         radioOne: {

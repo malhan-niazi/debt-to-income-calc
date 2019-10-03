@@ -1,13 +1,16 @@
 <template>
   <div>
-    <div class="form-group row background--gray background--rounded margin--bottom">
+    <div
+      class="form-group row background--gray background--rounded margin--bottom"
+    >
       <label
         :for="inputField.id"
         class="col-sm-6 padding-right col-form-label font-weight-bold"
-      >{{ inputField.label }}</label>
+        >{{ inputField.label }}</label
+      >
       <div class="col-sm-6 padding-right">
         <div class="input-group">
-          <div v-if="inputField.hasIcon" class="input-group-prepend">
+          <div v-if="inputField.icon" class="input-group-prepend">
             <span class="input-group-text">{{ inputField.icon }}</span>
           </div>
           <input
@@ -23,7 +26,7 @@
           <div class="invalid-feedback">{{ inputField.errorMsg }}</div>
         </div>
       </div>
-      <p v-if="inputField.hasDesc" class="padding-p">{{ inputField.desc }}</p>
+      <p v-if="inputField.desc" class="padding-p">{{ inputField.desc }}</p>
     </div>
   </div>
 </template>
